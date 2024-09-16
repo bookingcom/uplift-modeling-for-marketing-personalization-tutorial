@@ -23,7 +23,7 @@ Uplift modeling is a cutting-edge approach that goes beyond traditional predicti
 - Click on `Open Colab` in the middle of the screen
 - Click on the `Github` tab
 - Paste the link to this repo: `https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial`
-- Among the notebooks available, select the one that you want to run
+- Among the notebooks available, select the one you want to run
 - Once prompted to the notebook, you can execute it as usual from the colab environment
 
 ### Option 2 - Local Setup
