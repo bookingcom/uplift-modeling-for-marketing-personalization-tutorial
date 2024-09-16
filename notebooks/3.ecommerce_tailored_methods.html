@@ -378,7 +378,7 @@ document.write(`
 
 <span class="k">def</span> <span class="nf">setup_google_colab_execution</span><span class="p">():</span>
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;clone&quot;</span><span class="p">,</span> <span class="s2">&quot;https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial&quot;</span><span class="p">])</span> 
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/requirements-colab.txt&quot;</span><span class="p">])</span> 
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/tutorial/requirements-colab.txt&quot;</span><span class="p">])</span> 
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/tutorial/notebooks/utils.py&quot;</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">])</span>
 
 <span class="n">running_on_google_colab</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Set this to true if you&#39;re running this notebook on google colab</span>
@@ -521,7 +521,7 @@ Z_i = \begin{cases}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000203 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000154 seconds.
 You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 1275
 [LightGBM] [Info] Number of data points in the train set: 2783, number of used features: 5
