@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Challenges in Production &#8212; Uplift Modeling for Marketing Personalization in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/5.challenges_in_production';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Causal Inference Packages and Uplift Modeling Literature" href="6.other_resources.html" />
+    <link rel="prev" title="Explainability and Trust" href="4.explainability_and_trust.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Uplift Modeling for Marketing Personalization in Practice</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Uplift Modeling for Marketing Personalization in Practice
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.introduction.html">Introduction to Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.foundation_methods_for_uplift_modeling.html">Foundations Methods for Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.ecommerce_tailored_methods.html">Incremental Profit per Conversion (IPC) Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.explainability_and_trust.html">Explainability and Trust</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Challenges in Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.other_resources.html">Causal Inference Packages and Uplift Modeling Literature</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/5.challenges_in_production.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Challenges in Production</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-robustness-and-adaptiveness">1. Model Robustness and Adaptiveness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-drifts">Data drifts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#covariate-shift">Covariate Shift</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-drift">Concept Drift</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-to-build-robust-models">Strategies to Build Robust Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-model">Update the Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-common-operational-challenges">2. Other Common Operational Challenges</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-parity-online-vs-offline">Features Parity Online vs Offline</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-feature-parity">Importance of Feature Parity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges">Challenges</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigation-strategies">Mitigation Strategies</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#latency-and-scalability-in-model-deployment">Latency and Scalability in Model Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-latency-and-scalability">Importance of Latency and Scalability</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Challenges</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Mitigation Strategies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Google colab setup.</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">def</span> <span class="nf">setup_google_colab_execution</span><span class="p">():</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;clone&quot;</span><span class="p">,</span> <span class="s2">&quot;https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial&quot;</span><span class="p">])</span> 
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/requirements-colab.txt&quot;</span><span class="p">])</span> 
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/tutorial/notebooks/utils.py&quot;</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">])</span>
+
+<span class="n">running_on_google_colab</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Set this to true if you&#39;re running this notebook on google colab</span>
+
+<span class="k">if</span> <span class="n">running_on_google_colab</span><span class="p">:</span>
+    <span class="n">setup_google_colab_execution</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="challenges-in-production">
+<h1>Challenges in Production<a class="headerlink" href="#challenges-in-production" title="Link to this heading">#</a></h1>
+<section id="model-robustness-and-adaptiveness">
+<h2>1. Model Robustness and Adaptiveness<a class="headerlink" href="#model-robustness-and-adaptiveness" title="Link to this heading">#</a></h2>
+<p>A model is considered robust if it has the ability to maintain its performance across different environments and over time. If a model is not robust, its predictions may become inaccurate when applied to real-world data, leading to suboptimal decisions and potential business losses.</p>
+<section id="data-drifts">
+<h3>Data drifts<a class="headerlink" href="#data-drifts" title="Link to this heading">#</a></h3>
+<p>Several factors can challenge the robustness of an uplift model, including:</p>
+<section id="covariate-shift">
+<h4>Covariate Shift<a class="headerlink" href="#covariate-shift" title="Link to this heading">#</a></h4>
+<p>Over time, the distribution of input data (features) may change due to shifts in customer behavior, market conditions, or external factors. For example, customer preferences might evolve, or new competitors might enter the market, leading to changes in the data patterns the model relies on.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">booking_colors</span>
+<span class="kn">from</span> <span class="nn">cycler</span> <span class="kn">import</span> <span class="n">cycler</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="n">prop_cycle</span><span class="o">=</span><span class="n">cycler</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">booking_colors</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">feature_t0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">feature_t1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Plot for Data Drift</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">feature_t0</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$t_0$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">feature_t1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$t_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;light blue&#39;</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Change in distribution over time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/80e738c335b026c3710c35f1e6546d549556d70b47ede181e34e45e8331176af.png" src="../_images/80e738c335b026c3710c35f1e6546d549556d70b47ede181e34e45e8331176af.png" />
+</div>
+</div>
+</section>
+<section id="concept-drift">
+<h4>Concept Drift<a class="headerlink" href="#concept-drift" title="Link to this heading">#</a></h4>
+<p>Unlike covariate shift, concept drift occurs when the relationship between the features and the target outcome changes over time. For instance, if a model predicts customer churn based on past behavior, a change in the company’s pricing strategy might alter the factors influencing churn, causing concept drift.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate sample data for concept drift</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">outcome_t0</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">outcome_t1</span> <span class="o">=</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Plot for Concept Drift</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">outcome_t0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$t_0$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">outcome_t1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$t_1$&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Concept Drift: change in feature-outcome relationship over time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/343270473ed3768dc31b0829dc9fc11d598a0237bb163476bd4ef75ec40204f6.png" src="../_images/343270473ed3768dc31b0829dc9fc11d598a0237bb163476bd4ef75ec40204f6.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="strategies-to-build-robust-models">
+<h3>Strategies to Build Robust Models<a class="headerlink" href="#strategies-to-build-robust-models" title="Link to this heading">#</a></h3>
+<p>To ensure that your uplift model remains robust and adapt to the environment, consider the following strategies:</p>
+<section id="monitoring">
+<h4>Monitoring<a class="headerlink" href="#monitoring" title="Link to this heading">#</a></h4>
+<p><strong>ML Metrics Monitoring</strong>: Implement monitoring systems to regularly check for signs of data drift or other issues. This involves tracking the distribution of input features and the model’s predictions over time. If significant deviations are detected, it may indicate that the model’s assumptions no longer hold, necessitating further investigation or action.</p>
+<p><strong>Business KPI Monitoring</strong>: Implement monitoring systems to regularly check if your model is performing in production according to the business metrics. Business metrics will give a different perspective about how your model is performing compared to traditional ML metrics.</p>
+</section>
+<section id="update-the-model">
+<h4>Update the Model<a class="headerlink" href="#update-the-model" title="Link to this heading">#</a></h4>
+<p><strong>Automated Model Retraining</strong>: Set up automated pipelines that regularly update the model based on new data. Automation reduces the time lag between data changes and model updates, ensuring that the model remains aligned with the latest trends.</p>
+<p><strong>Incremental Learning</strong>: Implement incremental learning techniques that allow the model to update its parameters continuously as new data becomes available. This approach helps the model stay current without the need for full re-training, which can be resource-intensive. This approach is particularly useful when the data is collected in real-time and full model retraining is too expensive (e.g. when using deep learning models).</p>
+<p><strong>Feedback Loops</strong>: Incorporate feedback loops where the model’s predictions are evaluated against real-world outcomes. Use this feedback to refine the model continually. For example, if a model predicts that a customer will respond positively to a marketing offer, track the actual response and use this information to adjust the model.</p>
+</section>
+</section>
+</section>
+<section id="other-common-operational-challenges">
+<h2>2. Other Common Operational Challenges<a class="headerlink" href="#other-common-operational-challenges" title="Link to this heading">#</a></h2>
+<section id="features-parity-online-vs-offline">
+<h3>Features Parity Online vs Offline<a class="headerlink" href="#features-parity-online-vs-offline" title="Link to this heading">#</a></h3>
+<p>Feature Parity in online/offline match refers to ensuring that the features used during model training (offline) are equivalent with those available during serving (online). This equivalence is crucial for maintaining model accuracy and reliability in production.</p>
+<section id="importance-of-feature-parity">
+<h4>Importance of Feature Parity<a class="headerlink" href="#importance-of-feature-parity" title="Link to this heading">#</a></h4>
+<p><strong>Prediction Consistency</strong>: Discrepancies between training and deployment features can lead to inconsistent model predictions, undermining the model’s effectiveness in real-time applications.</p>
+<p><strong>Model Integrity</strong>: Aligning features between offline and online environments preserves the model’s integrity, ensuring it performs as expected when exposed to live data.</p>
+</section>
+<section id="challenges">
+<h4>Challenges<a class="headerlink" href="#challenges" title="Link to this heading">#</a></h4>
+<p><strong>Different Pipelines</strong>: Feature engineering processes may differ between training and deployment, causing misalignments.</p>
+<p><strong>Real-Time Availability:</strong> Some features used in training might not be accessible or feasible to compute in real-time, leading to potential gaps.</p>
+</section>
+<section id="mitigation-strategies">
+<h4>Mitigation Strategies<a class="headerlink" href="#mitigation-strategies" title="Link to this heading">#</a></h4>
+<p><strong>Unified Pipeline</strong>: Use the same feature engineering pipeline for both offline training and online deployment to minimize discrepancies.</p>
+<p><strong>Feature Stores</strong>: A feature store ensures training/serving parity by centralizing and managing consistent feature definitions across both offline training and online serving environments, reducing discrepancies and simplifying feature reuse.</p>
+<p><strong>Monitoring</strong>: Implement systems to compare online and offline features, ensuring consistency and catching discrepancies early.</p>
+</section>
+</section>
+<section id="latency-and-scalability-in-model-deployment">
+<h3>Latency and Scalability in Model Deployment<a class="headerlink" href="#latency-and-scalability-in-model-deployment" title="Link to this heading">#</a></h3>
+<p>Latency and Scalability are crucial considerations when deploying machine learning models, particularly in how the model’s architecture and complexity influence its performance under different conditions.</p>
+<section id="importance-of-latency-and-scalability">
+<h4>Importance of Latency and Scalability<a class="headerlink" href="#importance-of-latency-and-scalability" title="Link to this heading">#</a></h4>
+<p><strong>Model Response Time</strong>: Latency refers to the time it takes for a model to process an input and produce a prediction. In real-time applications, models must deliver predictions quickly to be useful, making low latency a key requirement.</p>
+<p><strong>Handling Large-Scale Predictions</strong>: Scalability involves the model’s ability to maintain performance as the number of predictions or data volume increases. This is essential for applications that need to process large amounts of data or serve many users simultaneously.</p>
+</section>
+<section id="id1">
+<h4>Challenges<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p><strong>Complexity vs. Speed</strong>: More complex models, like deep neural networks or large ensemble methods, often provide higher accuracy but at the cost of increased latency. These models require more computation, which can slow down prediction times, especially in real-time environments.</p>
+</section>
+<section id="id2">
+<h4>Mitigation Strategies<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p><strong>Model Simplification</strong>: Simplifying the model architecture, such as using a smaller neural network or fewer trees in an ensemble, can reduce latency while maintaining an acceptable level of accuracy. Reducing the number of features is also another way to simplify your model, if applicable.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4.explainability_and_trust.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Explainability and Trust</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="6.other_resources.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Causal Inference Packages and Uplift Modeling Literature</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-robustness-and-adaptiveness">1. Model Robustness and Adaptiveness</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-drifts">Data drifts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#covariate-shift">Covariate Shift</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-drift">Concept Drift</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#strategies-to-build-robust-models">Strategies to Build Robust Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#monitoring">Monitoring</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-model">Update the Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-common-operational-challenges">2. Other Common Operational Challenges</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-parity-online-vs-offline">Features Parity Online vs Offline</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-feature-parity">Importance of Feature Parity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#challenges">Challenges</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mitigation-strategies">Mitigation Strategies</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#latency-and-scalability-in-model-deployment">Latency and Scalability in Model Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-latency-and-scalability">Importance of Latency and Scalability</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Challenges</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Mitigation Strategies</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <br>
+<p xmlns:cc="http://creativecommons.org/ns#" >The work of this tutorial is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

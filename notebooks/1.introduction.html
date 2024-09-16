@@ -1,0 +1,656 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to Uplift Modeling &#8212; Uplift Modeling for Marketing Personalization in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/1.introduction';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Foundations Methods for Uplift Modeling" href="2.foundation_methods_for_uplift_modeling.html" />
+    <link rel="prev" title="Uplift Modeling for Marketing Personalization in Practice" href="../README.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Uplift Modeling for Marketing Personalization in Practice</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Uplift Modeling for Marketing Personalization in Practice
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.foundation_methods_for_uplift_modeling.html">Foundations Methods for Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.ecommerce_tailored_methods.html">Incremental Profit per Conversion (IPC) Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.explainability_and_trust.html">Explainability and Trust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.challenges_in_production.html">Challenges in Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.other_resources.html">Causal Inference Packages and Uplift Modeling Literature</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/1.introduction.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Uplift Modeling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-very-short-introduction-to-causal-inference">1. A Very Short Introduction to Causal Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-uplift-modeling">2. Why Uplift Modeling?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-models-vs-uplift-models">Traditional Models vs. Uplift Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-average-treatment-effect-cate">3. Conditional Average Treatment Effect (CATE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-examples">Real-World Examples:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-randomized-data-and-propensity-scores">4. Importance of Randomized Data and Propensity Scores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-ate-and-cate-with-randomized-data">Estimating ATE and CATE with Randomized Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-causal-inference-why-they-matter">5. Assumptions in Causal Inference: Why They Matter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-four-key-assumptions">The Four Key Assumptions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-challenges">Real-World Challenges:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ignorability-assumption">Ignorability Assumption:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#positivity-assumption">Positivity assumption</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-uplift-modeling">
+<h1>Introduction to Uplift Modeling<a class="headerlink" href="#introduction-to-uplift-modeling" title="Link to this heading">#</a></h1>
+<section id="a-very-short-introduction-to-causal-inference">
+<h2>1. A Very Short Introduction to Causal Inference<a class="headerlink" href="#a-very-short-introduction-to-causal-inference" title="Link to this heading">#</a></h2>
+<p>Causal inference is about understanding cause-and-effect relationships, moving beyond simple correlations to determine how an intervention or treatment directly influences an outcome.</p>
+<p>One way to measure the effect of a treatment is via <strong>Randomized Control Trials (RCTs)</strong> or <strong>A/B testing</strong>. RCT is method to establish causality by ensuring any differences between groups are due to the intervention and not other factors. To this end, we employ a random assignment to a control and treatment group that helps to balance both observed and unobserved characteristics between the groups, reducing bias.</p>
+<p>Below is an example of two versions of an email survey design used in an A/B testing experiment. The image shows two different designs of the same email sent to different groups to evaluate which version performs better in terms of user interaction.</p>
+<p><img alt="A/B Test Example" src="../_images/ab_test.png" /></p>
+<p>In a randomized controlled trial (RCT), the potential outcomes framework is used to assess the effect of a treatment.</p>
+<p>Each individual has two potential outcomes:</p>
+<ul class="simple">
+<li><p>Y(1) : The outcome if they receive the treatment.</p></li>
+<li><p>Y(0) : The outcome if they do not receive the treatment.</p></li>
+</ul>
+<p>The causal effect for an individual is the difference between these two outcomes:  Y(1) - Y(0) .</p>
+<p>However, as depicted in the table below, the <strong>fundamental problem of causal inference</strong> arises because:</p>
+<ul class="simple">
+<li><p>We can only observe one of the two potential outcomes for each individual (either  Y(1)  or  Y(0) ).</p></li>
+<li><p>The unobserved outcome (the counterfactual) remains unknown</p></li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head text-center"><p>Y(1)</p></th>
+<th class="head text-center"><p>Y(0)</p></th>
+<th class="head text-center"><p>Y(1) - Y(0)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>👨‍💼 Alice</p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p>?</p></td>
+<td class="text-center"><p>?</p></td>
+</tr>
+<tr class="row-odd"><td><p>👩‍💼 Bob</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>?</p></td>
+<td class="text-center"><p>?</p></td>
+</tr>
+<tr class="row-even"><td><p>👨‍⚕️ Mike</p></td>
+<td class="text-center"><p>?</p></td>
+<td class="text-center"><p>0</p></td>
+<td class="text-center"><p>?</p></td>
+</tr>
+<tr class="row-odd"><td><p>👩‍💼 Taylor</p></td>
+<td class="text-center"><p>?</p></td>
+<td class="text-center"><p>1</p></td>
+<td class="text-center"><p>?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p>Thus, we can use RCTs to compute the <strong>average treatment effect (ATE)</strong>, which measures the overall impact of the treatment across the entire population. It gives us a single number summarizing the effect.
+$<span class="math notranslate nohighlight">\(ATE = \mathbb{E}[Y(1)] - \mathbb{E}[Y(0)] \)</span>$</p></li>
+</ul>
+</section>
+<section id="why-uplift-modeling">
+<h2>2. Why Uplift Modeling?<a class="headerlink" href="#why-uplift-modeling" title="Link to this heading">#</a></h2>
+<p>In many real-world scenarios, it is not enough to know whether a treatment works in general; we need to understand for whom the treatment works best. Uplift modeling helps answer this question by predicting the change in behavior caused by a treatment on an individual level.</p>
+<p>For example:</p>
+<ul class="simple">
+<li><p><strong>Marketing</strong> 📈: Sending out promotions can be costly. Uplift modeling allows you to target customers who are likely to respond positively only because of the promotion. Instead of wasting resources on customers who would purchase anyway, you focus on those who need the extra nudge.</p></li>
+<li><p><strong>Healthcare</strong> 💉: In medicine, not every treatment works equally well for every patient. Uplift modeling helps doctors identify which patients are most likely to benefit from a specific treatment.</p></li>
+<li><p><strong>Personalization</strong> 🎯: Uplift modeling enables businesses to tailor treatments or policies to individuals who would experience the most significant impact.</p></li>
+</ul>
+<section id="traditional-models-vs-uplift-models">
+<h3>Traditional Models vs. Uplift Models<a class="headerlink" href="#traditional-models-vs-uplift-models" title="Link to this heading">#</a></h3>
+<p>Traditional predictive models estimate outcomes without considering the effect of a treatment. For example, a traditional model might predict whether a customer will make a purchase, but it doesn’t tell us whether offering a discount will change the customer’s decision. Uplift models, on the other hand, focus on predicting the change in behavior specifically due to the treatment.</p>
+<p>This shift in perspective makes uplift modeling especially powerful for personalized decision-making.</p>
+</section>
+</section>
+<section id="conditional-average-treatment-effect-cate">
+<h2>3. Conditional Average Treatment Effect (CATE)<a class="headerlink" href="#conditional-average-treatment-effect-cate" title="Link to this heading">#</a></h2>
+<p>CATE is the core concept behind uplift modeling. It measures the difference in expected outcomes between treated and untreated individuals, conditional on their features. CATE helps us understand how different groups of people respond differently to the same treatment.</p>
+<p><strong>Mathematically:</strong>
+<span class="math notranslate nohighlight">\(CATE(x) = \mathbb{E}[Y(1) - Y(0) | X = x]\)</span></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><strong>Y(1)</strong>: The outcome if treated.</p></li>
+<li><p><strong>Y(0)</strong>: The outcome if untreated.</p></li>
+<li><p><strong>X</strong>: The features of the individual.</p></li>
+<li><p><strong>Conditional Average Treatment Effect (CATE)</strong>: Focuses on the impact of the treatment for specific individuals or subgroups. It allows for heterogeneity in treatment effects.
+$<span class="math notranslate nohighlight">\( 	CATE(x) = \mathbb{E}[Y(1) - Y(0) | X = x] \)</span>$</p></li>
+</ul>
+<section id="real-world-examples">
+<h3>Real-World Examples:<a class="headerlink" href="#real-world-examples" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>In a marketing campaign, ATE might tell us that offering a 10% discount increases sales by 5% overall. However, CATE can reveal that for high-income customers, the discount has no impact, while for low-income customers, it boosts sales by 15%.</p></li>
+<li><p>In healthcare, ATE might suggest that a new drug is beneficial on average, but CATE can uncover that it is only effective for patients with a specific genetic marker.</p></li>
+</ol>
+</section>
+</section>
+<section id="importance-of-randomized-data-and-propensity-scores">
+<h2>4. Importance of Randomized Data and Propensity Scores<a class="headerlink" href="#importance-of-randomized-data-and-propensity-scores" title="Link to this heading">#</a></h2>
+<p>In many real-world scenarios, achieving perfect randomization is difficult. This is where propensity scores become crucial. The propensity score is the probability of receiving the treatment given a set of observed features. In uplift modeling, propensity scores help adjust for biases and imbalances in the data, allowing us to estimate treatment effects more accurately even when the data isn’t perfectly randomized.</p>
+<section id="estimating-ate-and-cate-with-randomized-data">
+<h3>Estimating ATE and CATE with Randomized Data<a class="headerlink" href="#estimating-ate-and-cate-with-randomized-data" title="Link to this heading">#</a></h3>
+<p>In a randomized setting:</p>
+<ul class="simple">
+<li><p><strong>ATE</strong> can be estimated by simply taking the difference in average outcomes between the treated and untreated groups.</p></li>
+<li><p><strong>CATE</strong> allows us to estimate treatment effects for specific subgroups or individuals, providing more targeted insights.</p></li>
+</ul>
+</section>
+</section>
+<section id="assumptions-in-causal-inference-why-they-matter">
+<h2>5. Assumptions in Causal Inference: Why They Matter<a class="headerlink" href="#assumptions-in-causal-inference-why-they-matter" title="Link to this heading">#</a></h2>
+<p>Uplift modeling, like other causal inference methods, relies on several critical assumptions to produce reliable estimates. If these assumptions are violated, our estimates can become biased or misleading.</p>
+<section id="the-four-key-assumptions">
+<h3>The Four Key Assumptions:<a class="headerlink" href="#the-four-key-assumptions" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Ignorability (No Unmeasured Confounders)</strong>: We assume that all factors influencing both treatment assignment and the outcome have been observed. If important confounders are missing, our estimates will be biased.</p></li>
+<li><p><strong>Positivity (Overlap)</strong>: For every individual, there must be a non-zero probability of receiving either the treatment or the control. Without this overlap, it becomes impossible to accurately estimate the treatment effect for some groups.</p></li>
+<li><p><strong>Consistency</strong>: The treatment received must align with the intended treatment, and its effect should be consistent across contexts.</p></li>
+<li><p><strong>Interference</strong>: The potential outcomes for one unit may be influenced by the treatment or exposure assigned to other units, thus violating the standard assumption of no interference between units (also known as the Stable Unit Treatment Value Assumption, or SUTVA).</p></li>
+</ol>
+</section>
+<section id="real-world-challenges">
+<h3>Real-World Challenges:<a class="headerlink" href="#real-world-challenges" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Selection Bias</strong>: In marketing, customers who are more engaged might be more likely to receive promotions, leading to biased treatment assignment.</p></li>
+<li><p><strong>Lack of Overlap</strong>: In healthcare, some treatments might only be prescribed to high-risk patients, making it difficult to estimate the effect for lower-risk patients.</p></li>
+</ol>
+</section>
+<section id="ignorability-assumption">
+<h3>Ignorability Assumption:<a class="headerlink" href="#ignorability-assumption" title="Link to this heading">#</a></h3>
+<p>There can be some features that we do not observe (we do not have them in our dataset or have no posibility of measuring) that can influence the treatment or the outcome. Under this situation, we have no guarantees that the outcome or the treatment changed for a reason without our knowledge.</p>
+<p><img alt="Causal Graph" src="../_images/causal_graph.png" /></p>
+</section>
+<section id="positivity-assumption">
+<h3>Positivity assumption<a class="headerlink" href="#positivity-assumption" title="Link to this heading">#</a></h3>
+<p>This is a larger problem when:</p>
+<ul class="simple">
+<li><p>No randomized data - there can be more subgroups associated to a treatment than the control (for example).</p></li>
+<li><p>Multiple treatments - the more treatments there are, the higher the chance that there is no overlap for certain segments in at least one treatment.</p></li>
+<li><p>Curse of dimensionality - the more possible subgroups exist (combination of all possible covariate values) the more chance there is that one subgroup will not have data points in each treatment.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../README.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uplift Modeling for Marketing Personalization in Practice</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="2.foundation_methods_for_uplift_modeling.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Foundations Methods for Uplift Modeling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-very-short-introduction-to-causal-inference">1. A Very Short Introduction to Causal Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-uplift-modeling">2. Why Uplift Modeling?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#traditional-models-vs-uplift-models">Traditional Models vs. Uplift Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-average-treatment-effect-cate">3. Conditional Average Treatment Effect (CATE)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-examples">Real-World Examples:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-randomized-data-and-propensity-scores">4. Importance of Randomized Data and Propensity Scores</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-ate-and-cate-with-randomized-data">Estimating ATE and CATE with Randomized Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-in-causal-inference-why-they-matter">5. Assumptions in Causal Inference: Why They Matter</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-four-key-assumptions">The Four Key Assumptions:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-challenges">Real-World Challenges:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ignorability-assumption">Ignorability Assumption:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#positivity-assumption">Positivity assumption</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <br>
+<p xmlns:cc="http://creativecommons.org/ns#" >The work of this tutorial is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

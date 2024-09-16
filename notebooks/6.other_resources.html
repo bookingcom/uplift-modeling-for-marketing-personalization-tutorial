@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Causal Inference Packages and Uplift Modeling Literature &#8212; Uplift Modeling for Marketing Personalization in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/6.other_resources';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Challenges in Production" href="5.challenges_in_production.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Uplift Modeling for Marketing Personalization in Practice</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Uplift Modeling for Marketing Personalization in Practice
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.introduction.html">Introduction to Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.foundation_methods_for_uplift_modeling.html">Foundations Methods for Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.ecommerce_tailored_methods.html">Incremental Profit per Conversion (IPC) Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.explainability_and_trust.html">Explainability and Trust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.challenges_in_production.html">Challenges in Production</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Causal Inference Packages and Uplift Modeling Literature</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/6.other_resources.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Causal Inference Packages and Uplift Modeling Literature</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-packages">1. Causal Inference Packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causalml">CausalML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#econml">EconML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dowhy">DoWhy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upliftml">UpliftML</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uplift-modeling-literature">2. Uplift Modeling Literature</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foundational-papers">Foundational Papers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-papers-on-specific-techniques">Key Papers on Specific Techniques</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorials">3. Tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#books">4. Books</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-in-python">Causal Inference in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-and-discovery-in-python">Causal Inference and Discovery in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#websites-and-blogs">5. Websites and Blogs</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="causal-inference-packages-and-uplift-modeling-literature">
+<h1>Causal Inference Packages and Uplift Modeling Literature<a class="headerlink" href="#causal-inference-packages-and-uplift-modeling-literature" title="Link to this heading">#</a></h1>
+<section id="causal-inference-packages">
+<h2>1. Causal Inference Packages<a class="headerlink" href="#causal-inference-packages" title="Link to this heading">#</a></h2>
+<section id="causalml">
+<h3><a class="reference external" href="https://github.com/uber/causalml">CausalML</a><a class="headerlink" href="#causalml" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A Python package developed by Uber for uplift modeling and causal inference. It includes methods such as tree-based algorithms, meta-learners (T-learner, S-learner, X-learner), and doubly robust models.</p></li>
+<li><p><strong>Key Features</strong>:</p>
+<ul>
+<li><p>Focuses on treatment effect estimation for both experimental and observational data.</p></li>
+<li><p>Provides feature importance analysis using SHAP values.</p></li>
+<li><p>Supports both uplift modeling and causal inference.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="econml">
+<h3><a class="reference external" href="https://github.com/microsoft/EconML">EconML</a><a class="headerlink" href="#econml" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Developed by Microsoft, EconML is designed for estimating heterogeneous treatment effects from observational or experimental data using machine learning models.</p></li>
+<li><p><strong>Key Features</strong>:</p>
+<ul>
+<li><p>Implements advanced meta-learners like the Doubly Robust Learner and Orthogonal Random Forests.</p></li>
+<li><p>Focuses on econometric techniques combined with ML.</p></li>
+<li><p>Strong support for high-dimensional covariates.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="dowhy">
+<h3><a class="reference external" href="https://github.com/py-why/dowhy">DoWhy</a><a class="headerlink" href="#dowhy" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>DoWhy is an end-to-end Python library for causal inference that integrates causal graphs, estimation, and refutation tests.</p></li>
+<li><p><strong>Key Features</strong>:</p>
+<ul>
+<li><p>Uses a unified framework to combine causal inference with machine learning.</p></li>
+<li><p>Allows building causal graphs and performing counterfactual analysis.</p></li>
+<li><p>Integrates easily with other libraries such as EconML and CausalML.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="upliftml">
+<h3><a class="reference external" href="https://github.com/bookingcom/upliftml">UpliftML</a><a class="headerlink" href="#upliftml" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Developed by <a class="reference external" href="http://Booking.com">Booking.com</a>, <code class="docutils literal notranslate"><span class="pre">upliftml</span></code> is a Python package specifically designed for uplift modeling. It focuses on practical applications of uplift modeling in real-world scenarios like personalization and targeted interventions.</p></li>
+<li><p><strong>Key Features</strong>:</p>
+<ul>
+<li><p>Implements models like the Uplift Random Forest, two-model approach, and retrospective estimation approach.</p></li>
+<li><p>Provides tools for data preprocessing, model evaluation, and visualization tailored for uplift use cases.</p></li>
+<li><p>Designed with scalability and real-world deployment in mind, making it suitable for large-scale applications.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="uplift-modeling-literature">
+<h2>2. Uplift Modeling Literature<a class="headerlink" href="#uplift-modeling-literature" title="Link to this heading">#</a></h2>
+<p><strong>Uplift modeling</strong> is a statistical technique used to estimate the incremental impact of a treatment or intervention on an individual’s outcome. This is particularly useful in fields like marketing, healthcare, and economics, where understanding the causal relationship between actions and outcomes is crucial.</p>
+<p>Here are some of the most influential papers in this field:</p>
+<section id="foundational-papers">
+<h3>Foundational Papers<a class="headerlink" href="#foundational-papers" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>“Causal inference and uplift modelling: A review of the literature.”</strong> by Gutierrez &amp; Gérardy (2017) - This paper provides a comprehensive overview of the various methods and techniques used in uplift modeling, making it a valuable resource for newcomers to the field. <a class="reference external" href="https://proceedings.mlr.press/v67/gutierrez17a">Link</a></p></li>
+<li><p><strong>“Uplift Modeling for Multiple Treatments with Cost Optimization”</strong> by Zhao &amp; Harinen (2019) - This paper extends the traditional uplift modeling framework to handle scenarios with multiple treatments and different costs, which is more representative of real-world applications. <a class="reference external" href="https://arxiv.org/abs/1908.05372">Link</a></p></li>
+<li><p><strong>“Uplift Modeling from Separate Labels”</strong> by Yamane et al. (2018) - This paper addresses the challenge of uplift modeling when only one type of label is available for each instance, proposing a novel method that can handle such scenarios. <a class="reference external" href="https://arxiv.org/abs/1803.05112">Link</a></p></li>
+<li><p><strong>“Free Lunch! Retrospective Uplift Modeling for Dynamic Promotions Recommendation within ROI Constraints”</strong> by Goldenberg et al. (2020) - This paper introduces a novel uplift modeling technique for personalized promotion recommendation with budget constraints. <a class="reference external" href="https://arxiv.org/abs/2008.06293">Link</a></p></li>
+</ul>
+</section>
+<section id="key-papers-on-specific-techniques">
+<h3>Key Papers on Specific Techniques<a class="headerlink" href="#key-papers-on-specific-techniques" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>“Recursive Partitioning for Heterogeneous Causal Effects”</strong> by Athey &amp; Imbens (2015) - This paper introduces the causal tree algorithm, a tree-based method specifically designed for uplift modeling that can handle heterogeneous treatment effects. <a class="reference external" href="https://arxiv.org/pdf/1504.01132">Link</a></p></li>
+<li><p><strong>“Real-World Uplift Modelling with Significance-Based Uplift Trees”</strong> by Radcliffe (2007) - This paper presents another tree-based method for uplift modeling that focuses on identifying subgroups with significant treatment effects. <a class="reference external" href="https://www.stochasticsolutions.com/pdf/sig-based-up-trees.pdf">Link</a></p></li>
+<li><p><strong>“A Large Scale Benchmark for Individual Treatment Effect Prediction and Uplift Modeling”</strong> by Diemert et al. (2021) - This paper provides a comprehensive benchmark dataset and evaluation metrics for comparing different uplift modeling methods. <a class="reference external" href="https://arxiv.org/abs/2111.10106">Link</a></p></li>
+</ul>
+</section>
+</section>
+<section id="tutorials">
+<h2>3. Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>“Uplift Modeling. From Causal Inference to Personalization”</strong> by <a class="reference external" href="http://Booking.com">Booking.com</a> Machine Learning Team (2023) - This tutorial provides a deep dive into uplift modeling concepts and <a class="reference external" href="http://Booking.com">Booking.com</a>’s experience in personalization applications. <a class="reference external" href="https://booking.ai/uplift-modeling-f9759e3fb51e">Link</a></p></li>
+</ul>
+</section>
+<section id="books">
+<h2>4. Books<a class="headerlink" href="#books" title="Link to this heading">#</a></h2>
+<section id="causal-inference-in-python">
+<h3>Causal Inference in Python<a class="headerlink" href="#causal-inference-in-python" title="Link to this heading">#</a></h3>
+<p><strong>Author:</strong> Matheus Facure</p>
+<p><strong>Focus:</strong> Practical guide to causal inference using Python, with emphasis on real-world applications.</p>
+</section>
+<section id="causal-inference-and-discovery-in-python">
+<h3>Causal Inference and Discovery in Python<a class="headerlink" href="#causal-inference-and-discovery-in-python" title="Link to this heading">#</a></h3>
+<p><strong>Focus:</strong> Theoretical underpinnings of causal inference, statistical methods, and causal discovery.</p>
+</section>
+</section>
+<section id="websites-and-blogs">
+<h2>5. Websites and Blogs<a class="headerlink" href="#websites-and-blogs" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/matteocourthoud/awesome-causal-inference?tab=readme-ov-file">Awesome Causal Inference Git repo</a></p></li>
+<li><p><a class="reference external" href="https://matheusfacure.github.io/python-causality-handbook/landing-page.html">Causal Inference for The Brave and True</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="5.challenges_in_production.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Challenges in Production</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-packages">1. Causal Inference Packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causalml">CausalML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#econml">EconML</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dowhy">DoWhy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#upliftml">UpliftML</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uplift-modeling-literature">2. Uplift Modeling Literature</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#foundational-papers">Foundational Papers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-papers-on-specific-techniques">Key Papers on Specific Techniques</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorials">3. Tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#books">4. Books</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-in-python">Causal Inference in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#causal-inference-and-discovery-in-python">Causal Inference and Discovery in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#websites-and-blogs">5. Websites and Blogs</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <br>
+<p xmlns:cc="http://creativecommons.org/ns#" >The work of this tutorial is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

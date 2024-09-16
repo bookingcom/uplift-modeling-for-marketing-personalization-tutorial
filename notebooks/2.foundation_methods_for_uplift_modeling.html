@@ -1,0 +1,2098 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Foundations Methods for Uplift Modeling &#8212; Uplift Modeling for Marketing Personalization in Practice</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/2.foundation_methods_for_uplift_modeling';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Incremental Profit per Conversion (IPC) Method" href="3.ecommerce_tailored_methods.html" />
+    <link rel="prev" title="Introduction to Uplift Modeling" href="1.introduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../README.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Uplift Modeling for Marketing Personalization in Practice</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../README.html">
+                    Uplift Modeling for Marketing Personalization in Practice
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.introduction.html">Introduction to Uplift Modeling</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Foundations Methods for Uplift Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.ecommerce_tailored_methods.html">Incremental Profit per Conversion (IPC) Method</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.explainability_and_trust.html">Explainability and Trust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.challenges_in_production.html">Challenges in Production</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6.other_resources.html">Causal Inference Packages and Uplift Modeling Literature</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/2.foundation_methods_for_uplift_modeling.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Foundations Methods for Uplift Modeling</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uplift-modeling-vs-causal-inference-vs-heterogeneous-treatment-effect-estimation">2. Uplift Modeling vs. Causal Inference vs. Heterogeneous Treatment Effect Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conceptual-differences">Conceptual Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-example">Practical Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaway">Takeaway</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-generation-with-causalml">3. Data Generation with CausalML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#foundation-methods">4. Foundation Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s-learner">S-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-implementation">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-s-learner-predictions">Visualization of S-Learner Predictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-s-learner">Conclusions S-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-learner">T-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Overview</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-t-learner-predictions">Visualization of T-Learner Predictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-t-learner">Conclusions T-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-transformation-or-z-learner">Outcome Transformation or Z-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-z-learner">Conclusions Z-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-all-models-side-by-side">Comparing All Models Side by Side</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-meta-learners-and-tailored-methods">Other Meta-Learners and Tailored Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-of-uplift-models">5. Evaluation of Uplift Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-qini-curves">Introduction to Qini Curves</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-qini-curve">What Is a Qini Curve?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qini-curves-work">How Qini Curves Work</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-qini-curves-and-business-metrics">Types of Qini Curves and Business Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-of-qini-curve-for-a-simple-uplift-model">Implementation of Qini Curve for a Simple Uplift Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-and-upper-bound">Random and Upper Bound</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-the-qini-curve">Area Under the Qini Curve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalized-area-under-the-qini-curve">Normalized Area Under the Qini Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insights">Insights</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-treatment-vs-multi-treatment-settings">One-Treatment vs. Multi-Treatment Settings</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-multi-treatment-setting">Example for Multi-Treatment Setting</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-treatment-qini-curve">Multi-Treatment Qini Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Google colab setup.</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">def</span> <span class="nf">setup_google_colab_execution</span><span class="p">():</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;clone&quot;</span><span class="p">,</span> <span class="s2">&quot;https://github.com/bookingcom/uplift-modeling-for-marketing-personalization-tutorial&quot;</span><span class="p">])</span> 
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;pip&quot;</span><span class="p">,</span> <span class="s2">&quot;install&quot;</span><span class="p">,</span> <span class="s2">&quot;-r&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/requirements-colab.txt&quot;</span><span class="p">])</span> 
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;cp&quot;</span><span class="p">,</span> <span class="s2">&quot;uplift-modeling-for-marketing-personalization-tutorial/tutorial/notebooks/utils.py&quot;</span><span class="p">,</span> <span class="s2">&quot;./&quot;</span><span class="p">])</span>
+
+<span class="n">running_on_google_colab</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Set this to true if you&#39;re running this notebook on google colab</span>
+
+<span class="k">if</span> <span class="n">running_on_google_colab</span><span class="p">:</span>
+    <span class="n">setup_google_colab_execution</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="foundations-methods-for-uplift-modeling">
+<h1>Foundations Methods for Uplift Modeling<a class="headerlink" href="#foundations-methods-for-uplift-modeling" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<section id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h3>
+<p>Conditional Average Treatment Effect (CATE) estimation is central to understanding how different individuals or groups respond to interventions. Estimating CATE helps organizations optimize budget constraints by directing resources where they will have the greatest impact.</p>
+</section>
+<section id="key-concepts">
+<h3>Key Concepts<a class="headerlink" href="#key-concepts" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Uplift Modeling</strong>: Predicts the incremental impact of a treatment on an individual. It is used in scenarios where the objective is to know which are the subgroups of the population that benefit from a treatment.</p></li>
+<li><p><strong>Causal Inference</strong>: Estimates the average effect of a treatment across a population, useful in policy-making. An example of an historical application to policy making is the work by David Card and Alan B. Krueger’s on the impact of the minimum wage on employment (1993).</p></li>
+<li><p><strong>Heterogeneous Treatment Effect (HTE) Estimation</strong>: Focuses on understanding how treatment effects vary across subpopulations, allowing for personalized strategies.</p></li>
+</ol>
+<p>CATE estimation is crucial for personalized interventions, helping businesses and organizations make better decisions in marketing, healthcare, and policy-making.</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="uplift-modeling-vs-causal-inference-vs-heterogeneous-treatment-effect-estimation">
+<h2>2. Uplift Modeling vs. Causal Inference vs. Heterogeneous Treatment Effect Estimation<a class="headerlink" href="#uplift-modeling-vs-causal-inference-vs-heterogeneous-treatment-effect-estimation" title="Link to this heading">#</a></h2>
+<section id="conceptual-differences">
+<h3>Conceptual Differences<a class="headerlink" href="#conceptual-differences" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Uplift Modeling</strong>: Personalized predictions to identify individuals who will respond positively to an intervention (e.g., targeting “persuadable” customers in marketing).</p></li>
+<li><p><strong>Causal Inference</strong>: Estimates the average treatment effect (ATE) across a population (e.g., evaluating public health measures).</p></li>
+<li><p><strong>HTE Estimation</strong>: Explores how treatment effects differ across subgroups (e.g., understanding varying responses to a drug across demographics).</p></li>
+</ul>
+</section>
+<section id="practical-example">
+<h3>Practical Example<a class="headerlink" href="#practical-example" title="Link to this heading">#</a></h3>
+<p>Suppose a company runs a promotional campaign:</p>
+<ol class="arabic simple">
+<li><p><strong>Causal Inference</strong>: “What is the average effect of the promotion on sales?”</p></li>
+<li><p><strong>Uplift Modeling</strong>: “Which customers will increase their purchases if they receive the promotion?”</p></li>
+<li><p><strong>HTE Estimation</strong>: “Which segments of customers are most likely to respond positively to the promotion?”</p></li>
+</ol>
+</section>
+<section id="takeaway">
+<h3>Takeaway<a class="headerlink" href="#takeaway" title="Link to this heading">#</a></h3>
+<p>All these techniques use interchangeably techniques to estimate CATE. The difference is in question they are trying to answer and in their historical origin, which is why they are referred to as different methods and use different terminology.</p>
+<p>Below is a visualization showing how treatment effects differ in uplift modeling:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causalml.dataset</span> <span class="kn">import</span> <span class="n">synthetic_data</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcdefaults</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">booking_colors</span>
+<span class="kn">from</span> <span class="nn">cycler</span> <span class="kn">import</span> <span class="n">cycler</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;axes&#39;</span><span class="p">,</span> <span class="n">prop_cycle</span><span class="o">=</span><span class="n">cycler</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">booking_colors</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">control_group</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">treated_group</span> <span class="o">=</span> <span class="n">control_group</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Create a DataFrame for easier handling</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Outcome&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">control_group</span><span class="p">,</span> <span class="n">treated_group</span><span class="p">]),</span>
+    <span class="s1">&#39;Group&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Control&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Treated&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the distribution of outcomes for both groups</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Outcome Distributions: Control vs Treated Groups&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to import duecredit due to No module named &#39;duecredit&#39;
+</pre></div>
+</div>
+<img alt="../_images/9fd7287ac85cc563f04227c4487384e2393830d17c2aeb74be399aff058188f9.png" src="../_images/9fd7287ac85cc563f04227c4487384e2393830d17c2aeb74be399aff058188f9.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="data-generation-with-causalml">
+<h2>3. Data Generation with CausalML<a class="headerlink" href="#data-generation-with-causalml" title="Link to this heading">#</a></h2>
+<p>To demonstrate these concepts practically, we will generate synthetic data using Python. The dataset simulates a randomized experiment, allowing us to evaluate different CATE estimation models.</p>
+<p>As the data is generated from a synthetic simulation, it is possible to know the ground truth CATE value (something that is not possible in real-world data). This allows us to evaluate the estimation models’ performance by comparing their CATE estimates with the ground truth.</p>
+<p>The <strong>variable “tau” represents the ground truth CATE value</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Generate synthetic data</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">synthetic_data</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># Convert data to a pandas DataFrame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;feature_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treatment</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tau&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tau</span>  <span class="c1"># True CATE</span>
+
+<span class="c1"># Show sample data</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature_0</th>
+      <th>feature_1</th>
+      <th>feature_2</th>
+      <th>feature_3</th>
+      <th>feature_4</th>
+      <th>treatment</th>
+      <th>outcome</th>
+      <th>tau</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.496714</td>
+      <td>-0.138264</td>
+      <td>0.647689</td>
+      <td>1.523030</td>
+      <td>-0.234153</td>
+      <td>1</td>
+      <td>2.787963</td>
+      <td>1.123117</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.234137</td>
+      <td>1.579213</td>
+      <td>0.767435</td>
+      <td>-0.469474</td>
+      <td>0.542560</td>
+      <td>1</td>
+      <td>0.992414</td>
+      <td>1.532499</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.463418</td>
+      <td>-0.465730</td>
+      <td>0.241962</td>
+      <td>-1.913280</td>
+      <td>-1.724918</td>
+      <td>0</td>
+      <td>-0.588904</td>
+      <td>0.023736</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.562288</td>
+      <td>-1.012831</td>
+      <td>0.314247</td>
+      <td>-0.908024</td>
+      <td>-1.412304</td>
+      <td>1</td>
+      <td>1.111354</td>
+      <td>-0.252461</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.465649</td>
+      <td>-0.225776</td>
+      <td>0.067528</td>
+      <td>-1.424748</td>
+      <td>-0.544383</td>
+      <td>0</td>
+      <td>2.090639</td>
+      <td>2.052266</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Train test split to evaluate the effectiveness of the estimators. The simulated data also contains ground truth which is usually not contained in real data. This allows to validate the quality of each model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Split data into training and testing sets</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Balanced datasets are key to ensuring that models generalize well. If certain subgroups are overrepresented or underrepresented, the model may become biased toward those groups, leading to inaccurate estimates.</p>
+</section>
+<section id="foundation-methods">
+<h2>4. Foundation Methods<a class="headerlink" href="#foundation-methods" title="Link to this heading">#</a></h2>
+<p>For an overview of Metalearners, please refer to:</p>
+<ul class="simple">
+<li><p>Künzel, Sören R., et al. “Metalearners for estimating heterogeneous treatment effects using machine learning.” Proceedings of the national academy of sciences 116.10 (2019): 4156-4165. <a class="reference external" href="https://www.pnas.org/doi/full/10.1073/pnas.1804597116">Link to paper</a>.</p></li>
+</ul>
+<section id="s-learner">
+<h3>S-Learner<a class="headerlink" href="#s-learner" title="Link to this heading">#</a></h3>
+<section id="id1">
+<h4>Overview<a class="headerlink" href="#id1" title="Link to this heading">#</a></h4>
+<p>The S-Learner uses a single model that takes both the features  <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>  and the treatment indicator  T  as inputs. At training time, the S-learner just adds the treatment indicator as a feature. At inference time, the model is used to make two predictions (in the case of a single treatment and control groups), one with T=1 (for the treated) and another with T=0 (for the untreated) scenarios, and the difference in these predictions gives the estimated CATE.</p>
+</section>
+<section id="formula">
+<h4>Formula<a class="headerlink" href="#formula" title="Link to this heading">#</a></h4>
+<p>For an individual with features  <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> , the CATE is estimated as:</p>
+<p><span class="math notranslate nohighlight">\(\hat{\tau}(\mathbf{X}) = f(\mathbf{X}, T=1) - f(\mathbf{X}, T=0)\)</span></p>
+<p>Where  <span class="math notranslate nohighlight">\(f(\mathbf{X}, T)\)</span>  is the predicted outcome from the model when  <span class="math notranslate nohighlight">\(T = 1\)</span>  (treated) or  <span class="math notranslate nohighlight">\(T = 0\)</span>  (untreated).</p>
+</section>
+<section id="code-implementation">
+<h4>Code Implementation<a class="headerlink" href="#code-implementation" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span>
+
+
+<span class="c1"># Train S-Learner model</span>
+<span class="n">s_learner</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span>
+<span class="n">s_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict outcomes for treated and untreated scenarios</span>
+<span class="n">X_test_treated</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_test_treated</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">X_test_untreated</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_test_untreated</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Estimate CATE using the difference in predictions</span>
+<span class="n">cate_s_learner</span> <span class="o">=</span> <span class="n">s_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_treated</span><span class="p">)</span> <span class="o">-</span> <span class="n">s_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_untreated</span><span class="p">)</span>
+
+<span class="c1"># Evaluate performance using Root Mean Squared Error</span>
+<span class="c1"># This is only possible because we have simulated data with ground truth</span>
+<span class="n">rmse_score</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_s_learner</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;S-Learner RMSE for CATE estimation: </span><span class="si">{</span><span class="n">rmse_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000296 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 1277
+[LightGBM] [Info] Number of data points in the train set: 4000, number of used features: 6
+[LightGBM] [Info] Start training from score 1.419537
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-Learner RMSE for CATE estimation: 0.3963
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-of-s-learner-predictions">
+<h4>Visualization of S-Learner Predictions<a class="headerlink" href="#visualization-of-s-learner-predictions" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cate_s_learner</span><span class="p">)</span>
+<span class="c1"># Create a DataFrame for easier handling</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Outcome&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cate_s_learner</span><span class="p">]),</span>
+    <span class="s1">&#39;Group&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;True CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;S-Learner CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the distribution of outcomes for both groups</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CATE distributions: S-Learner versus ground truth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/454e1844cda7c48270f7a71eb3bf704616beb7de5ae6e60e4e2a3305c2f61e4f.png" src="../_images/454e1844cda7c48270f7a71eb3bf704616beb7de5ae6e60e4e2a3305c2f61e4f.png" />
+</div>
+</div>
+</section>
+<section id="conclusions-s-learner">
+<h4>Conclusions S-Learner<a class="headerlink" href="#conclusions-s-learner" title="Link to this heading">#</a></h4>
+<p>The S-learner is the simplest possible causal model, as it only uses one ML model without any changes to directly estimate the CATE.</p>
+<p>Advantages:</p>
+<ol class="arabic simple">
+<li><p>Simplicity - it is simple to use, train, mantain, and deploy. Your regular ML model.</p></li>
+<li><p>Works well for sorting tasks - when the task only requires to sort decisions from better to worse (<span class="math notranslate nohighlight">\(\tau(\mathbf{X_1}) &gt;  \tau(\mathbf{X_2})\)</span>) the bias estimate is less important.</p></li>
+</ol>
+<p>Limitations:</p>
+<ol class="arabic simple">
+<li><p>Regularization - ML models implement regularization in order to not overfit. However, in the case of treatment effect estimation, this can bias the estimation to zero (as can be seen two figures above).</p>
+<ol class="arabic simple">
+<li><p>Weak treatment effect - in some cases the feature importance for the treatment is smaller than for other features. This can lead, in some cases, in the removal of treatment as a feature from the model.</p></li>
+</ol>
+</li>
+<li><p>Different tasks - the S-learner is trying to estimate the outcome correctly, not exactly minimizing the error in the CATE estimation <span class="math notranslate nohighlight">\(Y(1) - Y(0)\)</span>. This can lead to more errors in the estimation.</p></li>
+</ol>
+</section>
+</section>
+<section id="t-learner">
+<h3>T-Learner<a class="headerlink" href="#t-learner" title="Link to this heading">#</a></h3>
+<section id="id2">
+<h4>Overview<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
+<p>The T-Learner trains two separate models: one for the treated group and one for the untreated group. The difference in predictions between these two models represents the CATE.</p>
+</section>
+<section id="id3">
+<h4>Formula<a class="headerlink" href="#id3" title="Link to this heading">#</a></h4>
+<p>For an individual with features ( <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> ), the CATE is estimated as:</p>
+<p><span class="math notranslate nohighlight">\(\hat{\tau}(\mathbf{X}) = f_1(\mathbf{X}) - f_0(\mathbf{X})\)</span></p>
+</section>
+<section id="id4">
+<h4>Code Implementation<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split data into treated and untreated groups</span>
+<span class="n">treated</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">untreated</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Train separate models for treated and untreated groups</span>
+<span class="n">t_learner_treated</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span>
+<span class="n">t_learner_treated</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">treated</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="s1">&#39;treatment&#39;</span><span class="p">]),</span> <span class="n">treated</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">])</span>
+
+<span class="n">t_learner_untreated</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span>
+<span class="n">t_learner_untreated</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">untreated</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">,</span> <span class="s1">&#39;treatment&#39;</span><span class="p">]),</span> <span class="n">untreated</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">])</span>
+
+<span class="c1"># Predict outcomes for both treated and untreated scenarios</span>
+<span class="n">cate_t_learner</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">t_learner_treated</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]))</span> <span class="o">-</span>
+    <span class="n">t_learner_untreated</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]))</span>
+<span class="p">)</span>
+
+<span class="c1"># Evaluate performance using Root Mean Squared Error</span>
+<span class="c1"># This is only possible because we have simulated data with ground truth</span>
+<span class="n">rmse_score</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_t_learner</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;T-Learner RMSE for CATE estimation: </span><span class="si">{</span><span class="n">rmse_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000220 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 1275
+[LightGBM] [Info] Number of data points in the train set: 2492, number of used features: 5
+[LightGBM] [Info] Start training from score 1.847935
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000211 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 1275
+[LightGBM] [Info] Number of data points in the train set: 2508, number of used features: 5
+[LightGBM] [Info] Start training from score 0.959009
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>T-Learner RMSE for CATE estimation: 0.6287
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-of-t-learner-predictions">
+<h4>Visualization of T-Learner Predictions<a class="headerlink" href="#visualization-of-t-learner-predictions" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cate_t_learner</span><span class="p">)</span>
+<span class="c1"># Create a DataFrame for easier handling</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Outcome&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cate_t_learner</span><span class="p">]),</span>
+    <span class="s1">&#39;Group&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;True CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;T-Learner CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the distribution of outcomes for both groups</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CATE distributions: T-Learner versus ground truth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/94664d5a6a41c3cf5e04caae20625b6f62ca926aa689daf231f12b9fe68d53fa.png" src="../_images/94664d5a6a41c3cf5e04caae20625b6f62ca926aa689daf231f12b9fe68d53fa.png" />
+</div>
+</div>
+</section>
+<section id="conclusions-t-learner">
+<h4>Conclusions T-Learner<a class="headerlink" href="#conclusions-t-learner" title="Link to this heading">#</a></h4>
+<p>The T-learner is also quite simple, but can require multiple models (one per each treatment), that are trained independently.</p>
+<p>Advantages:</p>
+<ol class="arabic simple">
+<li><p>Simplicity - it is simple and provides unbiased estimates.</p></li>
+<li><p>Works well when data is abundant.</p></li>
+</ol>
+<p>Limitations:</p>
+<ol class="arabic simple">
+<li><p>Not data efficient - each model is only trained on a subset of the data, thus, each model does not learn from the overall distribution of values.</p></li>
+<li><p>Independent models - each model is trained independently, and thus subtracting the models’ outputs may lead to incorrect treatment effects. This can arise from issues such as lack of calibration between models, some models being trained on smaller datasets (if one treatment has less data), thus to errors when the models’ outcomes are aggregated.</p></li>
+</ol>
+</section>
+</section>
+<section id="outcome-transformation-or-z-learner">
+<h3>Outcome Transformation or Z-Learner<a class="headerlink" href="#outcome-transformation-or-z-learner" title="Link to this heading">#</a></h3>
+<p>The Z-learner implements a simple outcome transformation that allows to estimate the CATE with a regular machine learning model.</p>
+<p>The new outcome <span class="math notranslate nohighlight">\(Z\)</span> is defined as a transformation of the outcome of interest <span class="math notranslate nohighlight">\(Y\)</span>, treatment <span class="math notranslate nohighlight">\(T\)</span>, and the propensity <span class="math notranslate nohighlight">\(e(x) = \Pr(T=1 | X)\)</span> as follows:</p>
+<p><span class="math notranslate nohighlight">\(\Large
+Z= \left\{\begin{matrix}
+\frac{Y}{e(x)} &amp; \text{if  } \;T=1 \\
+-\frac{Y}{1-e(x)} &amp;  \text{if } \; T=0\\
+\end{matrix}\right. 
+\)</span></p>
+<p>It was shown that the outcome transformation converges to ATE over the whole data and to the CATE in a subset <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.
+Thus, a model trained with covariates <span class="math notranslate nohighlight">\(X\)</span> and outcome <span class="math notranslate nohighlight">\(Z\)</span> is an estimator <span class="math notranslate nohighlight">\(\hat{\tau}(\mathbf{X})\)</span> of the CATE.</p>
+<section id="id5">
+<h4>Formula<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<p>For an individual with features ( <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> ), the CATE is estimated as:</p>
+<p><span class="math notranslate nohighlight">\(\hat{\tau}(\mathbf{X}) = f_Z(\mathbf{X})\)</span></p>
+<p>References:</p>
+<ul class="simple">
+<li><p>Gubela, Robin M., Stefan Lessmann, and Szymon Jaroszewicz. “Response transformation and profit decomposition for revenue uplift modeling.” European Journal of Operational Research 283.2 (2020): 647-661. <a class="reference external" href="https://arxiv.org/pdf/1911.08729">Link to paper</a>.</p></li>
+<li><p>Rudaś, Krzysztof, and Szymon Jaroszewicz. “Linear regression for uplift modeling.” Data Mining and Knowledge Discovery 32 (2018): 1275-1305. <a class="reference external" href="https://link.springer.com/article/10.1007/s10618-018-0576-8">Link to paper</a>.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h4>Code Implementation<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span>
+
+<span class="c1"># compute propensity </span>
+<span class="n">propensity_treated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Propensity score for the treatment group: </span><span class="si">{</span><span class="n">propensity_treated</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">propensity_treated_vector</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">propensity_treated</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">propensity_treated</span><span class="p">)</span>
+
+
+<span class="c1"># outcome transformation</span>
+<span class="n">treatment_train</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">z_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treatment_train</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="o">-</span><span class="n">y_train</span><span class="p">)</span><span class="o">/</span><span class="n">propensity_treated_vector</span>
+
+<span class="c1"># Train Z-Learner model</span>
+<span class="n">z_learner</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span>
+<span class="n">X_train_without_treatment</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">])</span>
+<span class="n">z_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_without_treatment</span><span class="p">,</span> <span class="n">z_train</span><span class="p">)</span>
+
+<span class="c1"># Estimate CATE using the difference in predictions</span>
+<span class="n">X_test_without_treatment</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">])</span>
+<span class="n">cate_z_learner</span> <span class="o">=</span> <span class="n">z_learner</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_without_treatment</span><span class="p">)</span>
+
+<span class="c1"># Evaluate performance using AUC-ROC score</span>
+<span class="n">z_learner_rmse_score</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_z_learner</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Z-Learner RMSE for CATE estimation: </span><span class="si">{</span><span class="n">z_learner_rmse_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Propensity score for the treatment group: 0.5005
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000303 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 1275
+[LightGBM] [Info] Number of data points in the train set: 4000, number of used features: 5
+[LightGBM] [Info] Start training from score 0.874679
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Z-Learner RMSE for CATE estimation: 1.3314
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cate_t_learner</span><span class="p">)</span>
+<span class="c1"># Create a DataFrame for easier handling</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Outcome&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">cate_z_learner</span><span class="p">]),</span>
+    <span class="s1">&#39;Group&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;True CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Z-Learner CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the distribution of outcomes for both groups</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="s1">&#39;density&#39;</span><span class="p">,</span> <span class="n">common_norm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CATE distributions: Z-Learner versus ground truth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0d156c854ed2229db5ac3d78df66cd3e77fcde1ea9d44902363d4d1bd303b52c.png" src="../_images/0d156c854ed2229db5ac3d78df66cd3e77fcde1ea9d44902363d4d1bd303b52c.png" />
+</div>
+</div>
+</section>
+<section id="conclusions-z-learner">
+<h4>Conclusions Z-Learner<a class="headerlink" href="#conclusions-z-learner" title="Link to this heading">#</a></h4>
+<p>The Z-learner is also quite simple; only requires one model for making CATE estimations, and only one model call to estimate it. This feature transformation is used under many guises in state-of-the-art loss functions to solve more complex problems.</p>
+<p>Advantages:</p>
+<ol class="arabic simple">
+<li><p>Simplicity - it is a simple and unbiased estimator.</p></li>
+<li><p>Works well when the treatment signal is small (the transformation with negative and positive amplifies the signal of the treatment).</p></li>
+</ol>
+<p>Limitations:</p>
+<ol class="arabic simple">
+<li><p>Noisy and long tailed distributions - creating a distribution of negative and positive values, and calculating its mean, leads to a long tailed distribution and a not very elegant ML problem. This leads to predictions with a high-variance when compared to the true effect.</p></li>
+</ol>
+</section>
+</section>
+<section id="comparing-all-models-side-by-side">
+<h3>Comparing All Models Side by Side<a class="headerlink" href="#comparing-all-models-side-by-side" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_s_learner</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;S-learner&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_t_learner</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;T-learner&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">],</span> <span class="n">cate_z_learner</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Z-learner&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;All learners: Predicted vs. True CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;True CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Predicted CATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d413a9f43f71cae962566dff87d64994fdff2bf7110cdd4924046286d543a6a3.png" src="../_images/d413a9f43f71cae962566dff87d64994fdff2bf7110cdd4924046286d543a6a3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cate_t_learner</span><span class="p">)</span>
+<span class="c1"># Create a DataFrame for easier handling</span>
+<span class="n">df_plot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Outcome&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> 
+                               <span class="n">cate_s_learner</span><span class="p">,</span>
+                               <span class="n">cate_t_learner</span><span class="p">,</span>
+                               <span class="n">cate_z_learner</span><span class="p">,</span>
+                               <span class="p">]</span>
+                              <span class="p">),</span>
+    <span class="s1">&#39;Group&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;True CATE&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span> 
+    <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;S-Learner&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;T-Learner&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Z-Learner&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span>
+<span class="p">})</span>
+
+<span class="c1"># Plot the distribution of outcomes for both groups</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1">#sns.histplot(df_plot, x=&#39;Outcome&#39;, hue=&#39;Group&#39;, kde=True, stat=&#39;density&#39;, common_norm=False)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">df_plot</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Outcome&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Group&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CATE distributions: all learners versus ground truth&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Outcome&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ab1fc0628eb3bae25cbb591faef086875049c9d6553d4215ec7e6a8b2b7d5576.png" src="../_images/ab1fc0628eb3bae25cbb591faef086875049c9d6553d4215ec7e6a8b2b7d5576.png" />
+</div>
+</div>
+<p>The best model depends on the use case, but here follows some guidelines to take into consideration when selecting one of these learners.</p>
+<section id="key-takeaways">
+<h4>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Bias in S-Learners: S-Learners struggle with small treatment effects; and the regularization can lead to biased predictions.</p></li>
+<li><p>Unbalanced Data in T-Learners: T-Learners prefer a balanced dataset; otherwise, the model trained on the smaller group may underfit, reducing performance. Also, models are trained independently which can lead to worse calibration problems (compared to using only one model).</p></li>
+<li><p>High variance in Z-learners: the outcome transformation leads to a harder machine learning problem, and consequently, to predictions with higher variance than the true-effect. Can be especially affected by outlier values.</p></li>
+</ul>
+</section>
+</section>
+<section id="other-meta-learners-and-tailored-methods">
+<h3>Other Meta-Learners and Tailored Methods<a class="headerlink" href="#other-meta-learners-and-tailored-methods" title="Link to this heading">#</a></h3>
+<p>Over the years more complex models were proposed provide more accurate CATE estimates.</p>
+<p>Popular meta-learners include:</p>
+<ul class="simple">
+<li><p>X-Learner: An extension of the T-learner, it is often used when there is an imbalance in the number of treated vs. untreated samples. It constructs separate models for treatment and control groups and then uses those models to estimate treatment effects for each group. <a class="reference external" href="https://arxiv.org/pdf/1706.03461">Link to paper</a>.</p></li>
+<li><p>R-Learner: A flexible model for heterogeneous treatment effects estimation that first estimates nuisance parameters (like the propensity score and the outcome regression) and then applies a residual transformation to estimate treatment effects. <a class="reference external" href="https://arxiv.org/pdf/1712.04912">Link to paper</a></p></li>
+</ul>
+<p>Popular tailored tree-based and neural network methods include:</p>
+<ul class="simple">
+<li><p>Uplift Trees and Uplift Forests: Models that estimate the Conditional Average Treatment Effect (CATE) by fitting decision trees that split based on the difference in treatment effects between the treated and untreated groups. <a class="reference external" href="https://link.springer.com/article/10.1007/s10115-011-0434-0">Link to paper</a>.</p></li>
+<li><p>Causal Forest: A generalization of random forests designed to estimate heterogeneous treatment effects by creating subgroups in the data that capture treatment effect variations. <a class="reference external" href="https://doi.org/10.1214/18-AOS1709">Link to paper</a>.</p></li>
+<li><p>Dragonnet: A deep neural network architecture that extends classical machine learning approaches by incorporating both outcome prediction and treatment assignment in a unified framework. It is designed to estimate treatment effects with an emphasis on balancing treated and untreated populations. <a class="reference external" href="https://arxiv.org/pdf/1906.02120">Link to paper</a>.</p></li>
+</ul>
+</section>
+</section>
+<section id="evaluation-of-uplift-models">
+<h2>5. Evaluation of Uplift Models<a class="headerlink" href="#evaluation-of-uplift-models" title="Link to this heading">#</a></h2>
+<section id="introduction-to-qini-curves">
+<h3>Introduction to Qini Curves<a class="headerlink" href="#introduction-to-qini-curves" title="Link to this heading">#</a></h3>
+<p>Qini curves are a key visualization tool for evaluating uplift models. Qini coefficient, which is the area under the Qini curve, is a metric that allows to compare models. Together, they help measure how effectively a model can target individuals who are most likely to be influenced by a treatment.</p>
+<section id="what-is-a-qini-curve">
+<h4>What Is a Qini Curve?<a class="headerlink" href="#what-is-a-qini-curve" title="Link to this heading">#</a></h4>
+<p>A Qini curve plots the cumulative incremental response (like profit or conversions) as a function of the proportion of the population targeted. In simple terms, it shows how much uplift (or gain) you achieve by targeting the top X% of individuals ranked by the uplift model.</p>
+</section>
+<section id="how-qini-curves-work">
+<h4>How Qini Curves Work<a class="headerlink" href="#how-qini-curves-work" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The x-axis represents the cumulative percentage of the population targeted.</p></li>
+<li><p>The y-axis represents the cumulative incremental response (e.g., additional revenue, profit, or conversions).</p></li>
+</ul>
+<p>The area under the Qini curve (AUC) quantifies the model’s effectiveness: the higher the area, the better the model.</p>
+</section>
+</section>
+<section id="types-of-qini-curves-and-business-metrics">
+<h3>Types of Qini Curves and Business Metrics<a class="headerlink" href="#types-of-qini-curves-and-business-metrics" title="Link to this heading">#</a></h3>
+<p>There are several types of Qini curves, depending on the business context:</p>
+<ul class="simple">
+<li><p>Conversion-Based Qini Curves: Evaluate how much the model improves conversion rates.</p></li>
+<li><p>Profit-Based Qini Curves: Focus on incremental profit.</p></li>
+<li><p>Multi-Treatment Qini Curves: Assess uplift across multiple treatments.</p></li>
+</ul>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h3>
+<p>Qini curves and Uplift curves can come in many flavours. For a good overview of the multiple possibilities we would refer to the Table 2 in the following work:</p>
+<ul class="simple">
+<li><p>Devriendt, Floris, et al. “Learning to rank for uplift modeling.” IEEE Transactions on Knowledge and Data Engineering 34.10 (2020): 4888-4904. <a class="reference external" href="https://arxiv.org/pdf/2002.05897">Link to paper</a>.</p></li>
+</ul>
+</section>
+<section id="implementation-of-qini-curve-for-a-simple-uplift-model">
+<h3>Implementation of Qini Curve for a Simple Uplift Model<a class="headerlink" href="#implementation-of-qini-curve-for-a-simple-uplift-model" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Computes cumulative gain of a metric of interest when there is one treatment.</span>
+<span class="sd">    </span>
+<span class="sd">    It uses the outcome transformation of the Z-learner to cumulatively calculate the incremental effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="n">sorted_descending_index_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">prediction</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">transformed_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treatment</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="o">-</span><span class="n">outcome</span><span class="p">)</span><span class="o">/</span><span class="n">propensity</span>
+
+    <span class="n">transformed_score_by_highest_score</span> <span class="o">=</span> <span class="n">transformed_score</span><span class="p">[</span><span class="n">sorted_descending_index_predictions</span><span class="p">]</span>
+    
+    <span class="c1"># add noise in case predictions very similar</span>
+    <span class="n">very_small_gaussian_noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">))</span>
+    <span class="n">transformed_score_by_highest_score</span> <span class="o">=</span> <span class="n">transformed_score_by_highest_score</span> <span class="o">+</span> <span class="n">very_small_gaussian_noise</span>
+    
+    <span class="c1"># forces sum to start at 0</span>
+    <span class="n">transformed_score_by_highest_score_zero_at_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">transformed_score_by_highest_score</span><span class="p">))</span>
+    
+    <span class="n">cumulative_gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">transformed_score_by_highest_score_zero_at_start</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cumulative_gain</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="random-and-upper-bound">
+<h3>Random and Upper Bound<a class="headerlink" href="#random-and-upper-bound" title="Link to this heading">#</a></h3>
+<p>We can always compute two ideal curves:</p>
+<ul class="simple">
+<li><p><strong>Random</strong> - if we would treat units at random, we would in effect be treating units with the Average Treatment Effect (ATE). Tracing a straight line between zero effect at 0% of population treated and the total effect at 100% of the population gives us the ideal random line.</p></li>
+<li><p><strong>Upper bound</strong> - the upper bound is given if we could optimally separate every unit, in fact putting the treated units with highest positive outcome to the left, and the control units with the highest positive outcome to the right of the sorting. It is an unrealistic upper bound, but it is the theoretical limit for a given dataset.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">propensity_treated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Propensity score for the treatment group: </span><span class="si">{</span><span class="n">propensity_treated</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">propensity_treated_vector</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">propensity_treated</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">propensity_treated</span><span class="p">)</span>
+<span class="n">treatment_test</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+
+<span class="c1"># random prediction</span>
+<span class="n">predictions_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+<span class="n">cumulative_gain_random</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span> <span class="n">predictions_random</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity_treated_vector</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># random ideal line</span>
+<span class="n">transformed_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treatment_test</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="o">-</span><span class="n">y_test</span><span class="p">)</span><span class="o">/</span><span class="n">propensity_treated_vector</span>
+<span class="n">total_effect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">transformed_score</span><span class="p">)</span>
+<span class="n">cumulative_gain_ideal_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">total_effect</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># Upper bound on performance</span>
+<span class="n">perfect_prediction</span> <span class="o">=</span> <span class="n">transformed_score</span>
+<span class="n">cumulative_gain_perfect_model</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span> <span class="n">perfect_prediction</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity_treated_vector</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">population_percentage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="c1"># Visualize predictions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Random curve&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal random curve&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_perfect_model</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Propensity score for the treatment group: 0.49
+</pre></div>
+</div>
+<img alt="../_images/327dde98cf715d28e8e4ef0dbbaa8f2271314af8e3202c1fab21ebf8f1245ad1.png" src="../_images/327dde98cf715d28e8e4ef0dbbaa8f2271314af8e3202c1fab21ebf8f1245ad1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cumulative_gain_slearner</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span> <span class="n">cate_s_learner</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity_treated_vector</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">cumulative_gain_tlearner</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span> <span class="n">cate_t_learner</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity_treated_vector</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">cumulative_gain_zlearner</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_one_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span> <span class="n">cate_z_learner</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity_treated_vector</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Visualize predictions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal random curve&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_perfect_model</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_slearner</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;S-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_tlearner</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;T-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;light blue&#39;</span><span class="p">],</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_zlearner</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Z-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark grey&#39;</span><span class="p">],</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b836ee3c5790af19e64ccbf682c35bddfff1667edbd87c93cc0069812e5dd52a.png" src="../_images/b836ee3c5790af19e64ccbf682c35bddfff1667edbd87c93cc0069812e5dd52a.png" />
+</div>
+</div>
+</section>
+<section id="area-under-the-qini-curve">
+<h3>Area Under the Qini Curve<a class="headerlink" href="#area-under-the-qini-curve" title="Link to this heading">#</a></h3>
+<p>As a measure of quality for each model one can compute the Area Under the Qini Curve (AUQC) to give one scalar value to compare all models accross all the percentages of population treated. Similar to how the Area Under the ROC (AUC) is used in regular prediction.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auqc_slearner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_slearner</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal random curve&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_perfect_model</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_slearner</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;S-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">population_percentage</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">zeros</span><span class="p">,</span> <span class="n">cumulative_gain_slearner</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;AUQC = </span><span class="si">{</span><span class="n">auqc_slearner</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">&quot;</span>
+         <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e39f98713e84f893676034b0123b695ecc1387907a29c05c2ab0997c91dc1c56.png" src="../_images/e39f98713e84f893676034b0123b695ecc1387907a29c05c2ab0997c91dc1c56.png" />
+</div>
+</div>
+</section>
+<section id="normalized-area-under-the-qini-curve">
+<h3>Normalized Area Under the Qini Curve<a class="headerlink" href="#normalized-area-under-the-qini-curve" title="Link to this heading">#</a></h3>
+<p>The AUQC allows us to compare models in relation to a dataset, but does not allow to compare accross datasets.</p>
+<p>For this case, we can use the normalized AUQC, which is comparison between the model AUQC, the random curve AUQC and the upper bound AUQC. In practical terms, it gives a score between 0 and 1, where zero represents a model that performs equal to random and 1 a model that performs equal to the upper bound.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">auqc_slearner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_slearner</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+<span class="n">auqc_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_ideal_random</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+<span class="n">auqc_perfect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_perfect_model</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+
+<span class="n">normalized_auqc_slearner</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="n">auqc_slearner</span> <span class="o">-</span> <span class="n">auqc_random</span><span class="p">)</span><span class="o">/</span>
+    <span class="p">(</span><span class="n">auqc_perfect</span> <span class="o">-</span> <span class="n">auqc_random</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ideal random curve&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_perfect_model</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_slearner</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;S-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span>  <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">population_percentage</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">cumulative_gain_slearner</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Normalized AUQC = </span><span class="si">{</span><span class="n">normalized_auqc_slearner</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+         <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">population_percentage</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cumulative_gain_ideal_random</span><span class="p">,</span> <span class="n">cumulative_gain_perfect_model</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> 
+         <span class="n">alpha</span><span class="o">=</span><span class="mf">0.07</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span>
+         <span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0738a7a69b62e34b67d711c1abd376c6267b9f4e50b39fb9cf20be4920fdd0b2.png" src="../_images/0738a7a69b62e34b67d711c1abd376c6267b9f4e50b39fb9cf20be4920fdd0b2.png" />
+</div>
+</div>
+<section id="explanation">
+<h4>Explanation<a class="headerlink" href="#explanation" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The Qini curve is plotted based on the cumulative incremental gain as a function of the percentage of the population targeted.</p></li>
+<li><p>The diagonal dashed line represents a random model with no uplift effect.</p></li>
+</ul>
+</section>
+<section id="insights">
+<h4>Insights<a class="headerlink" href="#insights" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The higher the curve above the random line, the better the model is at identifying the right individuals to target.</p></li>
+<li><p>The area between the Qini curve and the random line is a useful metric to compare different models.</p></li>
+</ul>
+</section>
+</section>
+<section id="one-treatment-vs-multi-treatment-settings">
+<h3>One-Treatment vs. Multi-Treatment Settings<a class="headerlink" href="#one-treatment-vs-multi-treatment-settings" title="Link to this heading">#</a></h3>
+<p>The evaluation strategies differ depending on whether you have a single treatment or multiple treatments.</p>
+<ul class="simple">
+<li><p>Single Treatment Qini Curves: In this case, you typically compare the control group (no treatment) with a single treatment group. The goal is to measure how much incremental gain the model achieves by correctly targeting individuals for this treatment.</p></li>
+<li><p>Multi-Treatment Qini Curves: In settings with multiple treatments (e.g., multiple types of promotions), you need to generate separate Qini curves for each treatment. Alternatively, you can create a combined Qini curve that measures overall performance across all treatments.</p></li>
+</ul>
+<section id="example-for-multi-treatment-setting">
+<h4>Example for Multi-Treatment Setting<a class="headerlink" href="#example-for-multi-treatment-setting" title="Link to this heading">#</a></h4>
+<p>We extend our Qini curve implementation to handle multiple treatments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">causalml.dataset</span> <span class="kn">import</span> <span class="n">make_uplift_classification</span>
+<span class="c1"># Load multiple treatment dataset with conversion target</span>
+<span class="n">df</span><span class="p">,</span> <span class="n">x_names</span> <span class="o">=</span> <span class="n">make_uplift_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+
+<span class="n">mapping_treatments_to_codes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;control&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;treatment1&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;treatment2&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;treatment3&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">df</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s2">&quot;treatment_group_key&quot;</span><span class="p">:</span> <span class="n">mapping_treatments_to_codes</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;treatment_group_key&quot;</span><span class="p">:</span> <span class="s2">&quot;treatment&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>treatment</th>
+      <th>x1_informative</th>
+      <th>x2_informative</th>
+      <th>x3_informative</th>
+      <th>x4_informative</th>
+      <th>x5_informative</th>
+      <th>x6_irrelevant</th>
+      <th>x7_irrelevant</th>
+      <th>x8_irrelevant</th>
+      <th>x9_irrelevant</th>
+      <th>...</th>
+      <th>x12_uplift_increase</th>
+      <th>x13_increase_mix</th>
+      <th>x14_uplift_increase</th>
+      <th>x15_uplift_increase</th>
+      <th>x16_increase_mix</th>
+      <th>x17_uplift_increase</th>
+      <th>x18_uplift_increase</th>
+      <th>x19_increase_mix</th>
+      <th>conversion</th>
+      <th>treatment_effect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0.909486</td>
+      <td>0.828268</td>
+      <td>-0.016712</td>
+      <td>-0.872802</td>
+      <td>0.380530</td>
+      <td>0.273171</td>
+      <td>-0.020009</td>
+      <td>0.194151</td>
+      <td>1.387024</td>
+      <td>...</td>
+      <td>-1.957461</td>
+      <td>-0.775339</td>
+      <td>1.492639</td>
+      <td>-1.733130</td>
+      <td>-1.417696</td>
+      <td>-1.548022</td>
+      <td>-1.309032</td>
+      <td>-0.790066</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>-0.028409</td>
+      <td>-1.427630</td>
+      <td>1.813986</td>
+      <td>0.705597</td>
+      <td>1.148271</td>
+      <td>-1.996377</td>
+      <td>-0.801034</td>
+      <td>-1.699141</td>
+      <td>-0.139903</td>
+      <td>...</td>
+      <td>-0.622281</td>
+      <td>-0.962357</td>
+      <td>-1.283873</td>
+      <td>1.113277</td>
+      <td>0.640681</td>
+      <td>0.225083</td>
+      <td>-0.450529</td>
+      <td>0.150082</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0</td>
+      <td>-0.132473</td>
+      <td>-1.772580</td>
+      <td>0.695160</td>
+      <td>-0.985407</td>
+      <td>-0.943285</td>
+      <td>1.040515</td>
+      <td>-1.382704</td>
+      <td>0.795706</td>
+      <td>-0.517023</td>
+      <td>...</td>
+      <td>-0.747040</td>
+      <td>-0.571946</td>
+      <td>-1.313160</td>
+      <td>1.295952</td>
+      <td>1.187784</td>
+      <td>-1.512765</td>
+      <td>-1.172256</td>
+      <td>-1.118350</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>-1.311725</td>
+      <td>-0.713705</td>
+      <td>-1.778944</td>
+      <td>0.155594</td>
+      <td>-0.580109</td>
+      <td>0.939822</td>
+      <td>0.425115</td>
+      <td>-1.223984</td>
+      <td>0.543634</td>
+      <td>...</td>
+      <td>-0.544115</td>
+      <td>0.482647</td>
+      <td>-0.082439</td>
+      <td>0.617260</td>
+      <td>0.591100</td>
+      <td>-2.180144</td>
+      <td>-1.524289</td>
+      <td>-1.991766</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3</td>
+      <td>-1.381492</td>
+      <td>-0.529531</td>
+      <td>2.140560</td>
+      <td>0.306833</td>
+      <td>0.272251</td>
+      <td>-1.353378</td>
+      <td>1.837827</td>
+      <td>-0.536166</td>
+      <td>0.273723</td>
+      <td>...</td>
+      <td>-0.633821</td>
+      <td>-1.095470</td>
+      <td>-0.541334</td>
+      <td>0.905296</td>
+      <td>0.649222</td>
+      <td>2.346678</td>
+      <td>0.108862</td>
+      <td>1.196733</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 22 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="s1">&#39;conversion&#39;</span><span class="p">,</span>
+               <span class="n">index</span><span class="o">=</span><span class="s1">&#39;treatment&#39;</span><span class="p">,</span>
+               <span class="n">aggfunc</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">],</span>
+               <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>size</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>conversion</th>
+      <th>conversion</th>
+    </tr>
+    <tr>
+      <th>treatment</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.501200</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.516000</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.555400</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.603500</td>
+      <td>10000</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.544025</td>
+      <td>40000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span><span class="p">,</span> <span class="n">df_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;conversion&#39;</span><span class="p">,</span> <span class="s1">&#39;treatment_effect&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;conversion&#39;</span><span class="p">]</span>
+
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;conversion&#39;</span><span class="p">,</span> <span class="s1">&#39;treatment_effect&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;conversion&#39;</span><span class="p">]</span>
+<span class="n">treatment_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">treatment_effect_test</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s1">&#39;treatment_effect&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">number_treatments</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">treatments</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train S-Learner model</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+<span class="n">s_learner</span> <span class="o">=</span> <span class="n">LGBMClassifier</span><span class="p">()</span>
+<span class="n">s_learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># control group data</span>
+<span class="n">X_test_untreated</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_test_untreated</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Estimate CATE using the difference in predictions</span>
+<span class="n">cate_s_learner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">number_treatments</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">treatment</span> <span class="ow">in</span> <span class="n">treatments</span><span class="p">:</span>
+    <span class="c1"># add treatment group to data</span>
+    <span class="n">X_test_treated</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">X_test_treated</span><span class="p">[</span><span class="s1">&#39;treatment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treatment</span>
+    <span class="c1"># probability of converted =1 </span>
+    <span class="n">cate_s_learner</span><span class="p">[:,</span> <span class="n">treatment</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_learner</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_treated</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">s_learner</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test_untreated</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Evaluate performance using Root Mean Squared Error</span>
+<span class="n">number_test_rows</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">prediction_for_actual_treatment</span> <span class="o">=</span> <span class="n">cate_s_learner</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">number_test_rows</span><span class="p">),</span> <span class="n">treatment_test</span><span class="p">]</span>
+<span class="n">rmse_score</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;treatment_effect&#39;</span><span class="p">],</span> <span class="n">prediction_for_actual_treatment</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;S-Learner RMSE for CATE estimation: </span><span class="si">{</span><span class="n">rmse_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Number of positive: 17377, number of negative: 14623
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.001023 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 4849
+[LightGBM] [Info] Number of data points in the train set: 32000, number of used features: 20
+[LightGBM] [Info] [binary:BoostFromScore]: pavg=0.543031 -&gt; initscore=0.172552
+[LightGBM] [Info] Start training from score 0.172552
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>S-Learner RMSE for CATE estimation: 0.1239
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="multi-treatment-qini-curve">
+<h3>Multi-Treatment Qini Curve<a class="headerlink" href="#multi-treatment-qini-curve" title="Link to this heading">#</a></h3>
+<p>The Qini curve for multiple treatments can be constructed based on four main insights:</p>
+<ol class="arabic simple">
+<li><p>Possible prescriptions - Multiple treatments can be prescribed for one instance.</p></li>
+<li><p>Treatment selection - The treatment with the maximum treatment effect per instance is selected as the best treatment for that instance.</p></li>
+<li><p>Only one ground truth treatment - There is only one ground truth treatment for each instance.</p></li>
+<li><p>Discard instances - if the selected treatment and the ground truth treatment do not match, that instance is discarded as we cannot possibly measure the effect of that treatment in that instance.</p></li>
+</ol>
+<p>Based on point 4. we need to create two types of matches:</p>
+<ol class="arabic simple">
+<li><p>Treatment match - find the instances where the ground truth treatment and selected treatment match.</p></li>
+<li><p>Control match - find the instances where the ground truth treatment corresponds to the control group.</p></li>
+</ol>
+<p>By cumulatively summing the matching values (and scaling them according to their propensity) we can make a cumulative curve of the selected treatment asignment according to a model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_cumulative_gain_multi_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="p">,</span>
+    <span class="n">treatment_assignment</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="p">,</span>
+    <span class="n">ground_truth_treatment</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="p">,</span>
+    <span class="n">control_group</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; This follows the idea of the z-transformation to calculate the treatment effect.</span>
+
+<span class="sd">    In the case of 1 treatment and 1 control make the following transformation:</span>
+<span class="sd">    transformed_outcome = + outcome/propensity if treatment != control_group </span>
+<span class="sd">                          - outcome/propensity if treatment == control_group</span>
+
+<span class="sd">    This is an unbiased estimator of the mean performance. </span>
+
+<span class="sd">    In the case of multitreatment the idea is similar:</span>
+
+<span class="sd">    transformed_outcome = + outcome/propensity if treatment != treatment_assignment</span>
+<span class="sd">                          - outcome/propensity if treatment == control_group</span>
+<span class="sd">                                             0 otherwise</span>
+<span class="sd">                                             </span>
+<span class="sd">    This assumes that we are using a randomized trial and if the instances are randomly distributed (according to their propesity), </span>
+<span class="sd">    then, on average the amount treatments assigments that are selected should be the same as those of the control group.</span>
+
+<span class="sd">    An adjustment could be made in case that is not exactly true.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># if the ground truth treatment matches assigned treatment, make outcome positive, otherwise make it zero</span>
+    <span class="n">transformed_score_treatment_asignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ground_truth_treatment</span> <span class="o">==</span> <span class="n">treatment_assignment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">propensity</span>
+    
+    <span class="c1"># if the ground truth treatment matches control, make outcome negative, otherwise make it zero</span>
+    <span class="n">transformed_score_control_group</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ground_truth_treatment</span> <span class="o">==</span> <span class="n">control_group</span><span class="p">,</span> <span class="o">-</span><span class="n">outcome</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">propensity</span>
+
+    <span class="c1"># total transformed outcome is the sum of both treatment assignments and control</span>
+    <span class="n">transformed_score</span> <span class="o">=</span> <span class="n">transformed_score_treatment_asignment</span> <span class="o">+</span> <span class="n">transformed_score_control_group</span>
+    
+    <span class="c1"># sort from the highest score to lowest</span>
+    <span class="n">very_small_gaussian_noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-16</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">prediction</span><span class="p">))</span>
+    <span class="n">sorted_descending_index_predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">prediction</span><span class="o">+</span><span class="n">very_small_gaussian_noise</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">transformed_score_by_highest_score</span> <span class="o">=</span> <span class="n">transformed_score</span><span class="p">[</span><span class="n">sorted_descending_index_predictions</span><span class="p">]</span>
+    
+    <span class="c1"># add the zero value at the start</span>
+    <span class="n">transformed_score_by_highest_score_zero_at_start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">transformed_score_by_highest_score</span><span class="p">))</span>
+    
+    <span class="c1"># compute cumulative average</span>
+    <span class="n">cumulative_outcome_gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">transformed_score_by_highest_score_zero_at_start</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cumulative_outcome_gain</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># find propensity as the average (under a randomized controlled trial)</span>
+<span class="n">propensity_per_treatment</span> <span class="o">=</span> <span class="n">df_test</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+<span class="n">propensity</span> <span class="o">=</span> <span class="n">propensity_per_treatment</span><span class="p">[</span><span class="n">treatment_test</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># S-learner</span>
+<span class="c1"># for each instance the highest estimated effect gets selected</span>
+<span class="n">treatment_asignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cate_s_learner</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">max_cate_prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">cate_s_learner</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="n">cumulative_gain_slearner_multitreatment</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_multi_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="n">max_cate_prediction</span><span class="p">,</span>
+    <span class="n">treatment_assignment</span><span class="o">=</span><span class="n">treatment_asignment</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">ground_truth_treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity</span><span class="p">,</span>
+    <span class="n">control_group</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">treatment_asignment</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0, 1, 2, 3]), array([ 344,  598, 2743, 4315]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sorted_ground_truth_treatment_effect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">treatment_effect_test</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">propensity</span> 
+<span class="n">sorted_ground_truth_treatment_effect</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">sorted_ground_truth_treatment_effect</span><span class="p">))</span>
+<span class="n">cumulative_ground_truth_gain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">sorted_ground_truth_treatment_effect</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">random_effects</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">treatment_effect_test</span><span class="p">)</span><span class="o">/</span><span class="n">propensity</span>
+<span class="n">random_effects</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span><span class="n">random_effects</span><span class="p">))</span>
+<span class="n">cumulative_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">random_effects</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_percentage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">auqc_slearner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_slearner_multitreatment</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_slearner_multitreatment</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;S-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_ground_truth_gain</span> <span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Optimal (ground_truth)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;light blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_random</span> <span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Random (ground truth)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ca1198a51a69ac3a53e4e53ccf2ebf5f8b940e32763b4abd87f9d1c4df99864e.png" src="../_images/ca1198a51a69ac3a53e4e53ccf2ebf5f8b940e32763b4abd87f9d1c4df99864e.png" />
+</div>
+</div>
+<p><strong>Note</strong> : in the multi-treatment scenario the model curves (S-learner in this case) does not have to end up at the random or optimal line for 100% of the population treated because the matching is not perfect.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># random based on the s-learner</span>
+<span class="n">treatment_asignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cate_s_learner</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">random_cate_prediction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">cumulative_gain_random</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_multi_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="n">random_cate_prediction</span><span class="p">,</span>
+    <span class="n">treatment_assignment</span><span class="o">=</span><span class="n">treatment_asignment</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">ground_truth_treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity</span><span class="p">,</span>
+    <span class="n">control_group</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># optimal based on the s-learner</span>
+<span class="n">treatment_asignment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cate_s_learner</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># transform score based on ground truth</span>
+<span class="n">transformed_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">treatment_test</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">cumulative_gain_optimal</span> <span class="o">=</span> <span class="n">compute_cumulative_gain_multi_treatment</span><span class="p">(</span>
+    <span class="n">prediction</span><span class="o">=</span><span class="n">transformed_score</span><span class="p">,</span>
+    <span class="n">treatment_assignment</span><span class="o">=</span><span class="n">treatment_asignment</span><span class="p">,</span>
+    <span class="n">outcome</span><span class="o">=</span><span class="n">y_test</span><span class="p">,</span>
+    <span class="n">ground_truth_treatment</span><span class="o">=</span><span class="n">treatment_test</span><span class="p">,</span>
+    <span class="n">propensity</span><span class="o">=</span><span class="n">propensity</span><span class="p">,</span>
+    <span class="n">control_group</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">population_percentage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">auqc_slearner</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">cumulative_gain_slearner_multitreatment</span><span class="p">,</span><span class="n">population_percentage</span><span class="p">)</span>
+<span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_optimal</span> <span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Upper bound (s-learner asignment)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;light blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_random</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Random (s-learner asignment)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;dark blue&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">population_percentage</span><span class="p">,</span> <span class="n">cumulative_gain_slearner_multitreatment</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;S-learner&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">booking_colors</span><span class="p">[</span><span class="s1">&#39;yellow&#39;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Qini curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Percentage of population treated (%)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cumulative outcome gain&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/91ae43b358836f431a4fde4c90499f3657a7e183eec2c9aaf5d102836420041b.png" src="../_images/91ae43b358836f431a4fde4c90499f3657a7e183eec2c9aaf5d102836420041b.png" />
+</div>
+</div>
+<section id="id7">
+<h4>Explanation<a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>The code now handles a scenario with multiple treatments (treatment A, treatment B, treatment C, and a control group).</p></li>
+<li><p>The Qini curve visualizes the overall performance of the model across all treatment groups.</p></li>
+</ul>
+</section>
+<section id="limitations">
+<h4>Limitations<a class="headerlink" href="#limitations" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Multi-level Qini curves require amounts of data proportional to the number of treatments (compared to one treatment Qini curve).</p></li>
+<li><p>The multi-level Qini is based on the idea that the amount of matches between selected treatment and ground truth is proportional to the propensity of that treatment. In case this assumption is violated (for some information leakage between covariates and treatment), the Qini curve can lead to wrong decisions.</p></li>
+</ul>
+</section>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>Qini curves provide an intuitive and powerful way to evaluate uplift models in both single-treatment and multi-treatment settings. The custom implementation provided here avoids reliance on specialized libraries, making it more flexible for experimentation.</p>
+<p>You can use and adapt these Qini curve functions for evaluating different types of uplift models based on your specific use case and business metrics.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1.introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Uplift Modeling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3.ecommerce_tailored_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Incremental Profit per Conversion (IPC) Method</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">1. Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts">Key Concepts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uplift-modeling-vs-causal-inference-vs-heterogeneous-treatment-effect-estimation">2. Uplift Modeling vs. Causal Inference vs. Heterogeneous Treatment Effect Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conceptual-differences">Conceptual Differences</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-example">Practical Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#takeaway">Takeaway</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-generation-with-causalml">3. Data Generation with CausalML</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#foundation-methods">4. Foundation Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#s-learner">S-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Overview</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#code-implementation">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-s-learner-predictions">Visualization of S-Learner Predictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-s-learner">Conclusions S-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-learner">T-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Overview</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-t-learner-predictions">Visualization of T-Learner Predictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-t-learner">Conclusions T-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#outcome-transformation-or-z-learner">Outcome Transformation or Z-Learner</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Code Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions-z-learner">Conclusions Z-Learner</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-all-models-side-by-side">Comparing All Models Side by Side</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#key-takeaways">Key Takeaways</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-meta-learners-and-tailored-methods">Other Meta-Learners and Tailored Methods</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-of-uplift-models">5. Evaluation of Uplift Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-qini-curves">Introduction to Qini Curves</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-qini-curve">What Is a Qini Curve?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qini-curves-work">How Qini Curves Work</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-qini-curves-and-business-metrics">Types of Qini Curves and Business Metrics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-of-qini-curve-for-a-simple-uplift-model">Implementation of Qini Curve for a Simple Uplift Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-and-upper-bound">Random and Upper Bound</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#area-under-the-qini-curve">Area Under the Qini Curve</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#normalized-area-under-the-qini-curve">Normalized Area Under the Qini Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#insights">Insights</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-treatment-vs-multi-treatment-settings">One-Treatment vs. Multi-Treatment Settings</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-for-multi-treatment-setting">Example for Multi-Treatment Setting</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multi-treatment-qini-curve">Multi-Treatment Qini Curve</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Explanation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  <br>
+<p xmlns:cc="http://creativecommons.org/ns#" >The work of this tutorial is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
+
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

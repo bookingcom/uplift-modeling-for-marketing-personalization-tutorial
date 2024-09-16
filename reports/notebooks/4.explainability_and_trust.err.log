@@ -1,0 +1,41 @@
+Traceback (most recent call last):
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "/Users/mromeo/.pyenv/versions/3.9.18/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/Users/mromeo/Documents/repos/uplift-modeling-for-marketing-personalization-tutorial/.venv/lib/python3.9/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from causalml.dataset import synthetic_data
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import seaborn as sns
+import pandas as pd
+import numpy as np
+from utils import booking_colors
+from cycler import cycler
+
+mpl.rcdefaults()
+plt.style.use('default')
+sns.set_style("whitegrid")
+plt.rc('axes', prop_cycle=cycler(color=list(booking_colors.values())))
+
+np.random.seed(42)
+------------------
+
+----- stderr -----
+
+KeyboardInterrupt
+------------------
+
+
+
