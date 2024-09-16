@@ -1,0 +1,14 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: README.md
+options:  # The options key will be applied to all chapters, but not sub-sections
+  numbered: False
+chapters:
+- file: notebooks/1.introduction
+- file: notebooks/2.foundation_methods_for_uplift_modeling
+- file: notebooks/3.ecommerce_tailored_methods
+- file: notebooks/4.explainability_and_trust
+- file: notebooks/5.challenges_in_production
+- file: notebooks/6.other_resources

@@ -1,0 +1,10 @@
+matplotlib==3.9.2
+numpy==1.26.4
+shap==0.46.0
+pandas>2
+seaborn==0.13.2
+scikit-learn==1.5.1
+causalml==0.15.1
+lightgbm==4.5.0
+jupyterlab==4.2.5
+jupyter==1.1.1
