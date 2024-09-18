@@ -415,11 +415,6 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to import duecredit due to No module named &#39;duecredit&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <p>Let’s start by training an S-Leaner</p>
 <div class="cell docutils container">
@@ -532,7 +527,7 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
 <span class="c1"># Split data into training and testing sets</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">])</span>  <span class="c1"># Keep treatment as a feature</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">,</span> <span class="s1">&#39;tau&#39;</span><span class="p">])</span>  <span class="c1"># Keep treatment as a feature</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;outcome&#39;</span><span class="p">]</span>  <span class="c1"># Target variable</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
@@ -553,10 +548,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000265 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000316 seconds.
 You can set `force_col_wise=true` to remove the overhead.
-[LightGBM] [Info] Total Bins 1532
-[LightGBM] [Info] Number of data points in the train set: 4000, number of used features: 7
+[LightGBM] [Info] Total Bins 1277
+[LightGBM] [Info] Number of data points in the train set: 4000, number of used features: 6
 [LightGBM] [Info] Start training from score 1.419537
 </pre></div>
 </div>
@@ -576,7 +571,7 @@ You can set `force_col_wise=true` to remove the overhead.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/e740e1ea30ff778aa01a1a21d281ef6b31cf77df1e4190433575c4089df99da9.png" src="../_images/e740e1ea30ff778aa01a1a21d281ef6b31cf77df1e4190433575c4089df99da9.png" />
+<img alt="../_images/750f4de8726b94e44bfa19ff3a4b411f1baac33fd93b4f51464f09b33a6a46a2.png" src="../_images/750f4de8726b94e44bfa19ff3a4b411f1baac33fd93b4f51464f09b33a6a46a2.png" />
 </div>
 </div>
 <p>Each bucket of the distribution represent a subset of the targeted population.</p>
@@ -639,15 +634,15 @@ You can set `force_col_wise=true` to remove the overhead.
       <th>0</th>
       <td>0</td>
       <td>0</td>
-      <td>14.0</td>
-      <td>14.0</td>
+      <td>13.0</td>
+      <td>13.0</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>0</td>
-      <td>25.0</td>
-      <td>25.0</td>
+      <td>17.0</td>
+      <td>17.0</td>
     </tr>
     <tr>
       <th>2</th>
@@ -667,15 +662,15 @@ You can set `force_col_wise=true` to remove the overhead.
       <th>4</th>
       <td>0</td>
       <td>1</td>
-      <td>3.0</td>
+      <td>4.0</td>
       <td>17.0</td>
     </tr>
     <tr>
       <th>5</th>
       <td>1</td>
       <td>1</td>
-      <td>58.0</td>
-      <td>83.0</td>
+      <td>69.0</td>
+      <td>86.0</td>
     </tr>
     <tr>
       <th>6</th>
@@ -702,8 +697,8 @@ You can set `force_col_wise=true` to remove the overhead.
       <th>9</th>
       <td>1</td>
       <td>2</td>
-      <td>178.0</td>
-      <td>261.0</td>
+      <td>182.0</td>
+      <td>268.0</td>
     </tr>
   </tbody>
 </table>
@@ -731,7 +726,7 @@ You can set `force_col_wise=true` to remove the overhead.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/a93faed9215ac40d490c444b54ce7ac546e4957c0975fe87acee2cefbff02ef3.png" src="../_images/a93faed9215ac40d490c444b54ce7ac546e4957c0975fe87acee2cefbff02ef3.png" />
+<img alt="../_images/a5589a399bf636d0d9964f0ee08ca80feb574b0d145cc712a10a23e60c1ba447.png" src="../_images/a5589a399bf636d0d9964f0ee08ca80feb574b0d145cc712a10a23e60c1ba447.png" />
 </div>
 </div>
 </section>
@@ -768,11 +763,187 @@ You can set `force_col_wise=true` to remove the overhead.
 <p>This is where a <strong>SHAP Surrogate Model</strong> comes into play: A surrogate model is a simpler or more interpretable model that approximates the behavior of a more complex model. For S-Learner explanations, we can use a surrogate model trained specifically to predict the treatment effect directly, rather than the outcome.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The S-learner is trained on the outcome</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature_0</th>
+      <th>feature_1</th>
+      <th>feature_2</th>
+      <th>feature_3</th>
+      <th>feature_4</th>
+      <th>treatment</th>
+      <th>outcome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4227</th>
+      <td>0.057054</td>
+      <td>-0.081551</td>
+      <td>-1.297212</td>
+      <td>0.160135</td>
+      <td>-0.583626</td>
+      <td>0</td>
+      <td>1.240913</td>
+    </tr>
+    <tr>
+      <th>4676</th>
+      <td>-0.761419</td>
+      <td>-0.478505</td>
+      <td>0.810051</td>
+      <td>-1.501827</td>
+      <td>1.105807</td>
+      <td>0</td>
+      <td>-1.086773</td>
+    </tr>
+    <tr>
+      <th>800</th>
+      <td>-0.863494</td>
+      <td>-0.031203</td>
+      <td>0.018017</td>
+      <td>0.472630</td>
+      <td>-1.366858</td>
+      <td>0</td>
+      <td>-0.858750</td>
+    </tr>
+    <tr>
+      <th>3671</th>
+      <td>1.838755</td>
+      <td>1.605690</td>
+      <td>-0.875324</td>
+      <td>0.072802</td>
+      <td>1.710809</td>
+      <td>1</td>
+      <td>6.664757</td>
+    </tr>
+    <tr>
+      <th>4193</th>
+      <td>0.557739</td>
+      <td>-0.107983</td>
+      <td>0.140180</td>
+      <td>0.897722</td>
+      <td>0.929312</td>
+      <td>0</td>
+      <td>0.750874</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># The surrogate model will be trained on the treatment effect</span>
+<span class="n">X_test_surrogate</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">treatment_effect_s_learner</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">treatment_effect_s_learner</span><span class="p">,</span> 
+                                       <span class="n">name</span><span class="o">=</span><span class="s2">&quot;treatment_effect_s_learner&quot;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">X_test_surrogate</span><span class="p">,</span> <span class="n">treatment_effect_s_learner</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>feature_0</th>
+      <th>feature_1</th>
+      <th>feature_2</th>
+      <th>feature_3</th>
+      <th>feature_4</th>
+      <th>treatment_effect_s_learner</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.241916</td>
+      <td>0.205456</td>
+      <td>-0.775607</td>
+      <td>-0.800335</td>
+      <td>-0.498987</td>
+      <td>-1.528042</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.719472</td>
+      <td>-0.625107</td>
+      <td>0.943159</td>
+      <td>-0.008871</td>
+      <td>1.133688</td>
+      <td>-0.119800</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.126238</td>
+      <td>-0.240398</td>
+      <td>0.767844</td>
+      <td>-0.194585</td>
+      <td>0.033871</td>
+      <td>1.477655</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.783359</td>
+      <td>-1.470490</td>
+      <td>-1.262770</td>
+      <td>-0.775875</td>
+      <td>0.078964</td>
+      <td>1.314942</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-1.173880</td>
+      <td>-0.197938</td>
+      <td>2.067906</td>
+      <td>-1.831682</td>
+      <td>-1.051310</td>
+      <td>0.045547</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">shap</span>
 <span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMRegressor</span>
 <span class="c1"># Train a surrogate model to predict the treatment effect using regression</span>
 <span class="n">surrogate_model</span> <span class="o">=</span> <span class="n">LGBMRegressor</span><span class="p">()</span>  <span class="c1"># Changed to a regression model</span>
-<span class="n">X_test_surrogate</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;tau&quot;</span><span class="p">])</span>
 <span class="n">surrogate_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_test_surrogate</span><span class="p">,</span> <span class="n">treatment_effect_s_learner</span><span class="p">)</span>
 
 <span class="c1"># Use SHAP to explain the surrogate model</span>
@@ -785,14 +956,14 @@ You can set `force_col_wise=true` to remove the overhead.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000229 seconds.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000299 seconds.
 You can set `force_col_wise=true` to remove the overhead.
 [LightGBM] [Info] Total Bins 1275
 [LightGBM] [Info] Number of data points in the train set: 1000, number of used features: 5
-[LightGBM] [Info] Start training from score 0.761518
+[LightGBM] [Info] Start training from score 0.752923
 </pre></div>
 </div>
-<img alt="../_images/0352f5dbd32a74b4e682acfb88219ac908228ae5ba927b7222a02d32982b3de5.png" src="../_images/0352f5dbd32a74b4e682acfb88219ac908228ae5ba927b7222a02d32982b3de5.png" />
+<img alt="../_images/dc544f2dd81a6697b201c014811759d1eb7961752120550cb95861647185adf5.png" src="../_images/dc544f2dd81a6697b201c014811759d1eb7961752120550cb95861647185adf5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -802,7 +973,7 @@ You can set `force_col_wise=true` to remove the overhead.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5bae17a157502970bf8ca1121e893f541c04a60279318cdbdac0af80792c65f8.png" src="../_images/5bae17a157502970bf8ca1121e893f541c04a60279318cdbdac0af80792c65f8.png" />
+<img alt="../_images/fd7153a833de8afb4a8199920cb7d7161b41dbfd0b0ad7c33090450b5c6fb464.png" src="../_images/fd7153a833de8afb4a8199920cb7d7161b41dbfd0b0ad7c33090450b5c6fb464.png" />
 </div>
 </div>
 </section>
